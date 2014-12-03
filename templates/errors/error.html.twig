@@ -1,0 +1,16 @@
+{% extends "layout.html.twig" %}
+
+{% block body_content %}
+<section>
+    <div class="container">
+        <h1>Oops, an error {{ code }} occurred</h1>
+        {% block error %}{% endblock %}
+
+        {% if app.debug %}
+        {{ dump(exception) }}
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+
