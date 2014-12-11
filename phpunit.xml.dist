@@ -14,10 +14,19 @@
     bootstrap                   = "vendor/autoload.php">
 
     <testsuites>
-        <testsuite name="Test Suite">
-            <file>src/tests.php</file>
-            <directory>src/</directory>
+        <testsuite name="Project Test Suite">
+            <directory>./src/Shorty/Tests</directory>
         </testsuite>
     </testsuites>
 
+    <filter>
+        <whitelist>
+            <directory>./src</directory>
+            <exclude>
+                <directory>./src/Shorty/Resources</directory>
+                <directory>./src/Shorty/Tests</directory>
+                <directory>./src/Shorty/Exception</directory>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>

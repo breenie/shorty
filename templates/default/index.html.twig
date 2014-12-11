@@ -11,16 +11,17 @@
                         <hr class="star-light">
 
                         <form class="form-inline" role="form">
-                            <div class="form-group col-mid-6">
+                            {#<div class="form-group col-md-2"></div>#}
+                            <div class="form-group fcol-md-6">
                                 <label class="sr-only" for="url">Url</label>
-                                <input name="url" type="text" class="form-control input-lg" placeholder="Enter really long URL">
+                                <input name="url" style="width: 100%" type="text" class="form-control input-lg" placeholder="Enter really long URL">
                             </div>
 
-                            <div class="form-group col-mid-2">
+                            <div class="form-group fcol-md-2" >
                                 <button type="submit" class="btn btn-primary btn-lg">Shorten</button>
                             </div>
+                            {#<div class="form-group col-md-2"></div>#}
                         </form>
-
                         <!--
                         <p class="help-block text-danger"></p>
                         <div id="success"></div>

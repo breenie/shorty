@@ -95,4 +95,24 @@ EOF
         })
 ;
 
+$console->addCommands(
+    array(
+        new \Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand(),
+        new \Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand(),
+        new \Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand(),
+        new \Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand(),
+        new \Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand(),
+        new \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand()
+    )
+);
+
+$console->setHelperSet(
+    new \Symfony\Component\Console\Helper\HelperSet(
+        array(
+            'connection' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($app['db']),
+            'dialog'     => new \Symfony\Component\Console\Helper\DialogHelper(),
+        )
+    )
+);
+
 return $console;

@@ -41,7 +41,8 @@
         "symfony/translation": "~2.3",
         "symfony/twig-bridge": "~2.3",
         "symfony/validator": "~2.3",
-        "doctrine/dbal": "2.2.*"
+        "doctrine/dbal": "2.2.*",
+        "doctrine/migrations": "1.0.*@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "~3.7",
@@ -64,6 +65,15 @@
             "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/js web/js",
             "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/font-awesome-4.1.0 web/font-awesome-4.1.0",
             "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/fonts web/fonts"
+        ],
+        "post-update-cmd": [
+            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/css web/css",
+            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/js web/js",
+            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/font-awesome-4.1.0 web/font-awesome-4.1.0",
+            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/fonts web/fonts"
         ]
-    }
+    },
+    "bin": [
+        "bin/console"
+    ]
 }
