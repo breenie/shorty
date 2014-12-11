@@ -15,7 +15,7 @@
                     "type": "zip"
                 },
                 "source": {
-                    "type": "vcs",
+                    "type": "git",
                     "url": "git@github.com:IronSummitMedia/startbootstrap-freelancer.git",
                     "reference": "tags/v1.0.0"
                 }
