@@ -13,11 +13,6 @@
                 "dist": {
                     "url": "https://github.com/IronSummitMedia/startbootstrap-freelancer/archive/v1.0.0.zip",
                     "type": "zip"
-                },
-                "source": {
-                    "type": "git",
-                    "url": "git@github.com:IronSummitMedia/startbootstrap-freelancer.git",
-                    "reference": "tags/v1.0.0"
                 }
             }
         }
