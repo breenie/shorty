@@ -1,6 +1,6 @@
 {
-    "name": "kurl/silex-skeleton",
-    "description": "A pre-configured, bootstrapped skeleton for the Silex microframework",
+    "name": "kurl/shorty",
+    "description": "Another URL shortener",
     "license": "MIT",
     "version": "0.1.0",
     "type": "project",
@@ -60,6 +60,12 @@
     },
     "scripts": {
         "post-install-cmd": [
+            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/css web/css",
+            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/js web/js",
+            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/font-awesome-4.1.0 web/font-awesome-4.1.0",
+            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/fonts web/fonts"
+        ],
+        "post-update-cmd": [
             "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/css web/css",
             "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/js web/js",
             "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/font-awesome-4.1.0 web/font-awesome-4.1.0",
