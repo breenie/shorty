@@ -1,6 +1,6 @@
 {
-    "name": "kurl/silex-skeleton",
-    "description": "A pre-configured, bootstrapped skeleton for the Silex microframework",
+    "name": "kurl/shorty",
+    "description": "Another URL shortener",
     "license": "MIT",
     "version": "0.1.0",
     "type": "project",
@@ -13,11 +13,6 @@
                 "dist": {
                     "url": "https://github.com/IronSummitMedia/startbootstrap-freelancer/archive/v1.0.0.zip",
                     "type": "zip"
-                },
-                "source": {
-                    "type": "vcs",
-                    "url": "git@github.com:IronSummitMedia/startbootstrap-freelancer.git",
-                    "reference": "tags/v1.0.0"
                 }
             }
         }

@@ -1,0 +1,5 @@
+---
+
+dependencies:
+    override:
+        - composer install --prefer-dist --no-interaction
