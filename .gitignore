@@ -1,6 +1,5 @@
 !bin/console
 bin
-composer.lock
 web/components
 vendor
 
