@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\ProcessBuilder;
 
-$console = new Application('My Silex Application', 'n/a');
+$console = new Application('Shorty console', '0.0.0');
 $console->getDefinition()->addOption(new InputOption('--env', '-e', InputOption::VALUE_REQUIRED, 'The Environment name.', 'dev'));
 $console->setDispatcher($app['dispatcher']);
 $console
@@ -95,24 +95,9 @@ EOF
         })
 ;
 
-$console->addCommands(
-    array(
-        new \Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand(),
-        new \Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand(),
-        new \Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand(),
-        new \Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand(),
-        new \Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand(),
-        new \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand()
-    )
-);
-
-$console->setHelperSet(
-    new \Symfony\Component\Console\Helper\HelperSet(
-        array(
-            'connection' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($app['db']),
-            'dialog'     => new \Symfony\Component\Console\Helper\DialogHelper(),
-        )
-    )
+$app->register(
+    new \Kurl\Silex\Provider\DoctrineMigrationsProvider($console),
+    array('migrations.options' => $app['migrations.options'])
 );
 
 return $console;

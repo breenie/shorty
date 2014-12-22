@@ -14,7 +14,15 @@ $app['db.options']      = array(
     'host'     => '127.0.0.1',
     'port'     => '5432',
     'user'     => 'chris',
-    //'password' => ''
+);
+
+$app['db.options']      = array(
+    'driver'   => 'pdo_mysql',
+    'dbname'   => 'shorty',
+    'host'     => '10.0.0.2',
+    'port'     => '3306',
+    'user'     => 'root',
+    'password' => 'root'
 );
 
 $app->register(
@@ -23,4 +31,4 @@ $app->register(
         'profiler.cache_dir' => __DIR__ . '/../var/cache/profiler',
     )
 );
-$app->register(new Silex\Provider\DoctrineServiceProvider(), $app['db.options']);
+

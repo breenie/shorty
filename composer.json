@@ -37,7 +37,8 @@
         "symfony/twig-bridge": "~2.3",
         "symfony/validator": "~2.3",
         "doctrine/dbal": "2.2.*",
-        "doctrine/migrations": "1.0.*@dev"
+        "doctrine/migrations": "1.0.*@dev",
+        "kurl/silex-doctrine-migrations-provider": "~0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~3.7",

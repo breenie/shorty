@@ -3,11 +3,61 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %}Example{% endblock %}</title>
+    <style type="text/css">
+        header .container {
+            padding-top: 100px;
+            padding-bottom: 100px;
+        }
+
+        hr.star-light,
+        hr.star-primary {
+            margin: 25px auto 30px;
+            padding: 0;
+            max-width: 250px;
+            border: 0;
+            border-top: solid 5px;
+            text-align: center;
+        }
+
+        hr.star-light:after,
+        hr.star-primary:after {
+            content: "\f005";
+            display: inline-block;
+            position: relative;
+            top: -.8em;
+            padding: 0 .25em;
+            font-family: FontAwesome;
+            font-size: 2em;
+        }
+
+        hr.star-light {
+            border-color: #000;
+        }
+
+        hr.star-light:after {
+            color: #000;
+            background-color: #fff;
+        }
+
+        hr.star-primary {
+            border-color: #2c3e50;
+        }
+
+        hr.star-primary:after {
+            color: #2c3e50;
+            background-color: #fff;
+        }
+    </style>
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    {#<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css" rel="stylesheet">#}
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/freelancer.css" rel="stylesheet">
+
+    {#<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">#}
+
+
 
     <!-- Custom CSS -->
-    <link href="css/freelancer.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">

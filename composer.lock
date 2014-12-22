@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8b19836175c34a5545b8f0a73ed7c5e5",
+    "hash": "fdd353f697399ae0e8205d5312a2df9c",
     "packages": [
         {
             "name": "doctrine/common",
@@ -131,13 +131,66 @@
             "time": "2012-04-13 07:56:12"
         },
         {
+            "name": "doctrine/migrations",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/migrations.git",
+                "reference": "96f838b4fa93693d19196c8e24ed5f1c3972ba87"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/96f838b4fa93693d19196c8e24ed5f1c3972ba87",
+                "reference": "96f838b4fa93693d19196c8e24ed5f1c3972ba87",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "~2.0",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "symfony/console": "2.*",
+                "symfony/yaml": "2.*"
+            },
+            "suggest": {
+                "symfony/console": "to run the migration from the console"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\DBAL\\Migrations": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                }
+            ],
+            "description": "Database Schema migrations using Doctrine DBAL",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "database",
+                "migrations"
+            ],
+            "time": "2014-12-19 17:14:47"
+        },
+        {
             "name": "ironsummitmedia/startbootstrap-freelancer",
             "version": "1.0.0",
-            "source": {
-                "type": "vcs",
-                "url": "git@github.com:IronSummitMedia/startbootstrap-freelancer.git",
-                "reference": "tags/v1.0.0"
-            },
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/IronSummitMedia/startbootstrap-freelancer/archive/v1.0.0.zip",
@@ -145,6 +198,43 @@
                 "shasum": null
             },
             "type": "library"
+        },
+        {
+            "name": "kurl/silex-doctrine-migrations-provider",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kurlltd/silex-doctrine-migrations-provider.git",
+                "reference": "67c5217fff0f4fb7725f6164f7df11c11a51fb95"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kurlltd/silex-doctrine-migrations-provider/zipball/67c5217fff0f4fb7725f6164f7df11c11a51fb95",
+                "reference": "67c5217fff0f4fb7725f6164f7df11c11a51fb95",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "doctrine/dbal": "2.2.*",
+                "doctrine/migrations": "1.0.*@dev",
+                "phpunit/phpunit": "~3.7",
+                "silex/silex": "~1.0",
+                "symfony/console": "~2.3"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A doctrine migrations provider for silex",
+            "time": "2014-12-15 15:41:45"
         },
         {
             "name": "monolog/monolog",
@@ -1939,16 +2029,16 @@
     "packages-dev": [
         {
             "name": "heroku/heroku-buildpack-php",
-            "version": "v49",
+            "version": "v51",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heroku/heroku-buildpack-php.git",
-                "reference": "0adff36b9d648a3f836271fb7a6dc7eafff74356"
+                "reference": "0ce8f136e151b6b41ccff3f784c5bbd88c80fc88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/0adff36b9d648a3f836271fb7a6dc7eafff74356",
-                "reference": "0adff36b9d648a3f836271fb7a6dc7eafff74356",
+                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/0ce8f136e151b6b41ccff3f784c5bbd88c80fc88",
+                "reference": "0ce8f136e151b6b41ccff3f784c5bbd88c80fc88",
                 "shasum": ""
             },
             "bin": [
@@ -1979,7 +2069,7 @@
                 "nginx",
                 "php"
             ],
-            "time": "2014-11-28 14:22:06"
+            "time": "2014-12-18 17:44:49"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2397,7 +2487,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "doctrine/migrations": 20
+    },
     "prefer-stable": false,
     "platform": {
         "php": ">=5.3.3"
