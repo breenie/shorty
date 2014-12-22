@@ -97,7 +97,12 @@ EOF
 
 $app->register(
     new \Kurl\Silex\Provider\DoctrineMigrationsProvider($console),
-    array('migrations.options' => $app['migrations.options'])
+    array(
+        'migrations.namespace'  => $app['migrations.namespace'],
+        'migrations.directory'  => $app['migrations.directory'],
+        'migrations.name'       => $app['migrations.name'],
+        'migrations.table_name' => $app['migrations.table_name'],
+    )
 );
 
 return $console;

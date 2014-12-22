@@ -8,12 +8,11 @@ $app['twig.options']    = array('cache' => __DIR__ . '/../var/cache/twig');
 $app['asset_path']      = '/components';
 $app['monolog.logfile'] = __DIR__ . '/../var/logs/silex_prod.log';
 
-$app['migrations.options'] = array(
-    'namespace'  => 'Shorty\Migrations',
-    'directory'  => realpath(__DIR__ . '/../src/Shorty/Migrations'),
-    'name'       => 'Shorty',
-    'table_name' => 'shorty_migration_versions',
-);
+$app['migrations.options'] = array();
+$app['migrations.namespace']  = 'Shorty\Migrations';
+$app['migrations.directory']  = realpath(__DIR__ . '/../src/Shorty/Migrations');
+$app['migrations.name']       = 'Shorty';
+$app['migrations.table_name'] = 'shorty_migration_versions';
 
 //$app['db.options']      = array(
 //    'driver'   => 'pdo_pgsql',
