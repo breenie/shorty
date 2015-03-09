@@ -1,4 +1,10 @@
 <?php
+/**
+ * - Version20150309140100.php
+ *
+ * @author chris
+ * @created 09/03/15 14:01
+ */
 
 namespace Shorty\Migrations;
 
@@ -9,7 +15,7 @@ use Doctrine\DBAL\Types\Type;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20141215113804 extends AbstractMigration
+class Version20150309140100 extends AbstractMigration
 {
     /**
      * Up ports the database.
@@ -21,7 +27,7 @@ class Version20141215113804 extends AbstractMigration
     public function up(Schema $schema)
     {
         $table = $schema->createTable('shorty_url');
-        $table->addColumn('id', Type::BIGINT, array('auto_increment' => true, 'unsigned' => true));
+        $table->addColumn('id', Type::BIGINT, array('autoincrement' => true, 'unsigned' => true));
         $table->addColumn('url', Type::STRING, array('length' => 2083));
         $table->addColumn('created', Type::DATETIME);
         $table->setPrimaryKey(array('id'));

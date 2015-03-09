@@ -8,13 +8,6 @@ require __DIR__ . '/prod.php';
 // enable the debug mode
 $app['debug'] = true;
 $app['monolog.logfile'] = __DIR__ . '/../var/logs/silex_dev.log';
-$app['db.options']      = array(
-    'driver'   => 'pdo_pgsql',
-    'dbname'   => 'shorty',
-    'host'     => '127.0.0.1',
-    'port'     => '5432',
-    'user'     => 'chris',
-);
 
 $app['db.options']      = array(
     'driver'   => 'pdo_mysql',

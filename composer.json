@@ -25,8 +25,8 @@
         "symfony/validator": "~2.3",
         "doctrine/dbal": "2.2.*",
         "doctrine/migrations": "1.0.*@dev",
-        "kurl/silex-doctrine-migrations-provider": "~0.1",
-        "kurl/view": "~0.0"
+        "kurl/base62": "~1.0",
+        "kurl/silex-doctrine-migrations-provider": "~0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.4",

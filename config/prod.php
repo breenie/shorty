@@ -1,8 +1,5 @@
 <?php
 
-$dbopts = parse_url(getenv('DATABASE_URL'));
-// configure your app for the production environment
-
 $app['twig.path']       = array(__DIR__ . '/../templates');
 $app['twig.options']    = array('cache' => __DIR__ . '/../var/cache/twig');
 $app['asset_path']      = '/components';
@@ -15,7 +12,7 @@ $app['migrations.name']       = 'Shorty';
 $app['migrations.table_name'] = 'shorty_migration_versions';
 
 //$app['db.options']      = array(
-//    'driver'   => 'pdo_pgsql',
+//    'driver'   => 'pdo_mysql',
 //    'dbname'   => ltrim($dbopts['path'], '/'),
 //    'host'     => $dbopts['host'],
 //    'port'     => $dbopts['port'],

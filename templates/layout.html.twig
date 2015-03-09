@@ -4,65 +4,9 @@
     <meta charset="utf-8">
     <title>{% block title %}Example{% endblock %}</title>
     <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-        body,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        .h1,
-        .h2,
-        .h3,
-        .h4,
-        .h5,
-        .h6 {
-            font-family: "Ubuntu", Helvetica, Arial, sans-serif!important;
-        }
-        header .container {
-            padding-top: 100px;
-            padding-bottom: 100px;
-        }
-
-        /* Sticky footer styles
-        -------------------------------------------------- */
-        html {
-            position: relative;
-            min-height: 100%;
-        }
-        body {
-            /* Margin bottom by footer height */
-            margin-bottom: 60px;
-        }
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            /* Set the fixed height of the footer here */
-            height: 60px;
-            background-color: #000;
-        }
-
-
-        /* Custom page CSS
-        -------------------------------------------------- */
-        /* Not required for template or sticky footer method. */
-
-        .container {
-            /*width: auto;*/
-            /*max-width: 680px;*/
-            /*padding: 0 15px;*/
-        }
-        .container .text-muted {
-            margin: 20px 0;
-        }
-    </style>
-
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/shorty.css" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -72,9 +16,7 @@
 </head>
 <body>
 
-{% block header_content %}{% endblock %}
-
-{#{% block body_content %}{% endblock %}#}
+{% block body_content %}{% endblock %}
 
 <footer class="footer">
     <div class="container">
