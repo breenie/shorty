@@ -11,14 +11,14 @@ $app['migrations.directory']  = realpath(__DIR__ . '/../src/Shorty/Migrations');
 $app['migrations.name']       = 'Shorty';
 $app['migrations.table_name'] = 'shorty_migration_versions';
 
-//$app['db.options']      = array(
-//    'driver'   => 'pdo_mysql',
-//    'dbname'   => ltrim($dbopts['path'], '/'),
-//    'host'     => $dbopts['host'],
-//    'port'     => $dbopts['port'],
-//    'user'     => $dbopts['user'],
-//    'password' => $dbopts['pass']
-//);
+$app['db.options']      = array(
+    'driver'   => 'pdo_mysql',
+    'dbname'   => getenv('DB_NAME'),
+    'host'     => getenv('DB_HOST'),
+    'port'     => getenv('DB_PORT'),
+    'user'     => getenv('DB_USER'),
+    'password' => getenv('DB_PASS'),
+);
 
 $app['db.options'] = array();
 

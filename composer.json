@@ -48,8 +48,7 @@
     },
     "scripts": {
         "post-install-cmd": [
-        ],
-        "post-update-cmd": [
+            "bin/console migrations:migrate --no-interaction -q --env=prod"
         ]
     },
     "bin": [
