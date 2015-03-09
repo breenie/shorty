@@ -2,7 +2,7 @@
 bin
 web/components
 vendor
-
+build
 web/js
 web/css
 web/font-awesome-4.1.0

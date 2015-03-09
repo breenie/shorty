@@ -3,149 +3,88 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %}Example{% endblock %}</title>
+    <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css" />
     <style type="text/css">
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5,
+        .h6 {
+            font-family: "Ubuntu", Helvetica, Arial, sans-serif!important;
+        }
         header .container {
             padding-top: 100px;
             padding-bottom: 100px;
         }
 
-        hr.star-light,
-        hr.star-primary {
-            margin: 25px auto 30px;
-            padding: 0;
-            max-width: 250px;
-            border: 0;
-            border-top: solid 5px;
-            text-align: center;
-        }
-
-        hr.star-light:after,
-        hr.star-primary:after {
-            content: "\f005";
-            display: inline-block;
+        /* Sticky footer styles
+        -------------------------------------------------- */
+        html {
             position: relative;
-            top: -.8em;
-            padding: 0 .25em;
-            font-family: FontAwesome;
-            font-size: 2em;
+            min-height: 100%;
+        }
+        body {
+            /* Margin bottom by footer height */
+            margin-bottom: 60px;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            /* Set the fixed height of the footer here */
+            height: 60px;
+            background-color: #000;
         }
 
-        hr.star-light {
-            border-color: #000;
-        }
 
-        hr.star-light:after {
-            color: #000;
-            background-color: #fff;
-        }
+        /* Custom page CSS
+        -------------------------------------------------- */
+        /* Not required for template or sticky footer method. */
 
-        hr.star-primary {
-            border-color: #2c3e50;
+        .container {
+            /*width: auto;*/
+            /*max-width: 680px;*/
+            /*padding: 0 15px;*/
         }
-
-        hr.star-primary:after {
-            color: #2c3e50;
-            background-color: #fff;
+        .container .text-muted {
+            margin: 20px 0;
         }
     </style>
-    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
-    {#<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/flatly/bootstrap.min.css" rel="stylesheet">#}
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/freelancer.css" rel="stylesheet">
 
-    {#<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">#}
-
-
-
-    <!-- Custom CSS -->
-
-    <!-- Custom Fonts -->
-    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
-          type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     {% block head %}{% endblock %}
     <link rel="shortcut icon" href="{{ app.request.basePath }}/favicon.ico"/>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#page-top">Shorty</a>
-        </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="hidden">
-                    <a href="#page-top"></a>
-                </li>
-                <li class="page-scroll">
-                    <a href="#about">About</a>
-                </li>
-                <li class="page-scroll">
-                    <a href="#contact">Login</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-</nav>
 {% block header_content %}{% endblock %}
-{% block body_content %}{% endblock %}
 
-<!-- Footer -->
-<footer class="text-center">
-    <div class="footer-above">
-        <div class="container">
-            <div class="row">
-                <div class="footer-col col-md-4">
-                    <h3>Location</h3>
+{#{% block body_content %}{% endblock %}#}
 
-                    <p>Lancashire<br>Great Britain</p>
-                </div>
-                <div class="footer-col col-md-4">
-                </div>
-                <div class="footer-col col-md-4">
-                    <h3>About Shorty</h3>
-
-                    <p>Shorty is really just a demo web app for testing PaaS providers.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer-below">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    Another vanity project by <a href="https://www.kurl.uk/">kurl ltd</a> {{ "now"|date("Y") }}
-                </div>
+<footer class="footer">
+    <div class="container">
+        <div class="row text-muted">
+            <div class="col-lg-12">
+                Another vanity project by <a href="https://www.kurl.uk/">kurl ltd</a> {{ "now"|date("Y") }}
             </div>
         </div>
     </div>
 </footer>
-
-<!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-<div class="scroll-top page-scroll visible-xs visble-sm">
-    <a class="btn btn-primary" href="#page-top">
-        <i class="fa fa-chevron-up"></i>
-    </a>
-</div>
 
 <!-- jQuery -->
 <script src="js/jquery.js"></script>
@@ -153,13 +92,6 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
 
-<!-- Plugin JavaScript -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-<script src="js/classie.js"></script>
-<script src="js/cbpAnimatedHeader.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="js/freelancer.js"></script>{% block closing_scripts %}{% endblock %}
 </body>
 </html>
 

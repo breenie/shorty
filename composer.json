@@ -4,23 +4,9 @@
     "license": "MIT",
     "version": "0.1.0",
     "type": "project",
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "ironsummitmedia/startbootstrap-freelancer",
-                "version": "1.0.0",
-                "dist": {
-                    "url": "https://github.com/IronSummitMedia/startbootstrap-freelancer/archive/v1.0.0.zip",
-                    "type": "zip"
-                }
-            }
-        }
-    ],
     "require": {
         "php": ">=5.3.3",
-        "ironsummitmedia/startbootstrap-freelancer": "~1.0",
-        "silex/silex": "~1.0",
+        "silex/silex": "~1.2",
         "silex/web-profiler": "~1.0",
         "symfony/browser-kit": "~2.3",
         "symfony/class-loader": "~2.3",
@@ -31,6 +17,7 @@
         "symfony/finder": "~2.3",
         "symfony/form": "~2.3",
         "symfony/monolog-bridge": "~2.3",
+        "monolog/monolog": "~1.12",
         "symfony/process": "~2.3",
         "symfony/security": "~2.3",
         "symfony/translation": "~2.3",
@@ -38,14 +25,18 @@
         "symfony/validator": "~2.3",
         "doctrine/dbal": "2.2.*",
         "doctrine/migrations": "1.0.*@dev",
-        "kurl/silex-doctrine-migrations-provider": "~0.1"
+        "kurl/silex-doctrine-migrations-provider": "~0.1",
+        "kurl/view": "~0.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~3.7",
+        "phpunit/phpunit": "~4.4",
         "heroku/heroku-buildpack-php": "*"
     },
     "autoload": {
         "psr-0": { "": "src/" }
+    },
+    "autoload-dev" :{
+        "psr-0": { "": "tests/" }
     },
     "extra": {
         "branch-alias": {
@@ -57,16 +48,8 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/css web/css",
-            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/js web/js",
-            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/font-awesome-4.1.0 web/font-awesome-4.1.0",
-            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/fonts web/fonts"
         ],
         "post-update-cmd": [
-            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/css web/css",
-            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/js web/js",
-            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/font-awesome-4.1.0 web/font-awesome-4.1.0",
-            "cp -af vendor/ironsummitmedia/startbootstrap-freelancer/fonts web/fonts"
         ]
     },
     "bin": [

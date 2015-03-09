@@ -8,38 +8,31 @@
                 <div class="col-lg-12">
                     <div class="intro-text">
                         <h1 class="name">Shorten really long URLs</h1>
-                        <hr class="star-light">
+                        <p>Shorten massive long URLs in a similar fashion to the zillion other URL shortening services out there.</p>
 
-                        <form role="form">
+                        <form role="form" method="post" action="/">
                             <div class="row">
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-8">
                                     <label class="sr-only" for="url">Url</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control input-lg" placeholder="Enter really long URL" />
+                                        {{ form_widget(form.short_url, {attr: {class: "form-control input-lg", placeholder: 'Enter really long URL'|trans }}) }}
                                         <span class="input-group-btn">
-                                            <button class="btn btn-primary btn-lg" type="button">Shorten</button>
+                                            <button class="btn btn-primary btn-lg" type="submit">Shorten</button>
                                         </span>
-                                    </div><!-- /input-group -->
-                                </div><!-- /.col-lg-6 -->
+                                    </div>
+                                    {{ form_rest(form) }}
+                                </div>
                                 <div class="col-lg-2"></div>
-                            </div><!-- /.row -->
+                            </div>
                         </form>
 
-                        {#<form class="form-inline" role="form">#}
-                            {#<div class="form-group col-mid-6">#}
-                                {#<label class="sr-only" for="url">Url</label>#}
-                                {#<input name="url" type="text" class="form-control input-lg" placeholder="Enter really long URL">#}
-                            {#</div>#}
-
-                            {#<div class="form-group col-mid-2">#}
-                                {#<button type="submit" class="btn btn-primary btn-lg">Shorten</button>#}
-                            {#</div>#}
-                        {#</form>#}
-
                         <!--
-                        <p class="help-block text-danger"></p>
-                        <div id="success"></div>
+                        {#{% for alert in app.session.flashbag.get('example') %}#}
+                        {#<div class="error-message">#}
+                          {#<div class="alert"><strong>{{ alert }}</strong></div>#}
+                        {#</div>#}
+                        {#{% endfor %}#}
                         -->
                     </div>
                 </div>

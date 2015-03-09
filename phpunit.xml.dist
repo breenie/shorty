@@ -16,6 +16,7 @@
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>./src/Shorty/Tests</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 
