@@ -48,7 +48,6 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "bin/console migrations:migrate --no-interaction -q --env=prod"
         ]
     },
     "bin": [
