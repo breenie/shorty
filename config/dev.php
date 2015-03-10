@@ -24,4 +24,3 @@ $app->register(
         'profiler.cache_dir' => __DIR__ . '/../var/cache/profiler',
     )
 );
-

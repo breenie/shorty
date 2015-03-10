@@ -20,6 +20,4 @@ $app['db.options']      = array(
     'password' => getenv('DB_PASS'),
 );
 
-$app['db.options'] = array();
-
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array('db.options' => $app['db.options']));
