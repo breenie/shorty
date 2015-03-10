@@ -9,7 +9,7 @@ $app->register(new \Shorty\Provider\ShortyServiceProvider());
 $app->error(
     function (\Exception $e, $code) use ($app) {
         if ($app['debug']) {
-            //return;
+            return;
         }
 
         // 404.html.twig, or 40x.html, or 4xx.html.twig, or error.html
