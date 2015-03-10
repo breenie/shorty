@@ -8,6 +8,7 @@ $app->register(new \Shorty\Provider\ShortyServiceProvider());
 
 $app->error(
     function (\Exception $e, $code) use ($app) {
+        var_dump($app);exit;
         if ($app['debug']) {
             return;
         }
