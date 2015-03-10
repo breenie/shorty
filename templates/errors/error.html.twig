@@ -5,10 +5,12 @@
     <div class="container">
         <h1>Oops, an error {{ code }} occurred</h1>
         <p>{{ exception.message }}</p>
+
         {% block error %}{% endblock %}
 
         {% if true == app.debug %}
-        {{ dump(exception) }}
+        <h2>Debug appears to be on!</h2>
+        {#{{ dump(exception) }}#}
         {% endif %}
     </div>
 </section>
