@@ -7,7 +7,7 @@
         <p>{{ exception.message }}</p>
         {% block error %}{% endblock %}
 
-        {% if true === app.debug %}
+        {% if true == app.debug %}
         {{ dump(exception) }}
         {% endif %}
     </div>
