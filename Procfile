@@ -1,1 +1,1 @@
-web: bin/heroku-php-nginx web/index.php
+web: bin/heroku-php-apache2 web/
