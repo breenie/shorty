@@ -1,0 +1,40 @@
+{% extends 'layout.html.twig' %}
+{% import 'macros.html.twig' as kurl %}
+{% block title %}Shorty statistics{% endblock %}
+{% block flash_messages %}{% endblock %}
+
+{% block body_content %}
+
+    <div class="container">
+        <section>
+            <div class="page-header">
+                <h1>Boring statistics</h1>
+
+                <p class="lead">Recently created shorty links</p>
+                <p><a href="javascript:;" ng-click="refresh()">reload</a></p>
+            </div>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Short link</th>
+                    <th>Points to</th>
+                    <th>Date created</th>
+                    <th title="These numbers are currently random :)">Clicks</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="url in urls">
+                    {% verbatim %}
+                    <td><a href="{{ url.short_link }}">{{ url.short_link }}</a></td>
+                    <td><a href="{{ url.url }}">{{ url.url }}</a></td>
+                    <td>{{ url.created | date:'MM/dd/yyyy @ h:mma' }}</td>
+                    <td>{{ url.clicks | number }}</td>
+                    {% endverbatim %}
+                </tr>
+                </tbody>
+            </table>
+
+        </section>
+    </div>
+{% endblock %}

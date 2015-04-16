@@ -9,7 +9,6 @@
 namespace Shorty\Service;
 
 use Doctrine\DBAL\Connection;
-use Silex\Application;
 
 class UrlShortener
 {
@@ -71,12 +70,14 @@ class UrlShortener
      *
      * @param int    $id
      * @param string $userAgent
+     *
+     * @return int the number of rows affected
      */
     public function registerClick($id, $userAgent)
     {
         $now = new \DateTime();
 
-        $this->db->insert(
+        return $this->db->insert(
             'shorty_url_visit',
             array(
                 'shorty_url_id' => $id,

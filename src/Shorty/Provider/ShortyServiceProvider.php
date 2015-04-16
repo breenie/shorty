@@ -8,7 +8,8 @@
 
 namespace Shorty\Provider;
 
-use Kurl\Component\ShortUrl\Form\ShortUrlForm;
+use Kurl\Maths\Encode\Base62;
+use Shorty\Controller\ApiController;
 use Shorty\Controller\DefaultController;
 use Shorty\Service\UrlShortener;
 use Silex\Application;
@@ -27,7 +28,7 @@ class ShortyServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $app['twig.loader']->addLoader(new \Twig_Loader_Filesystem(__DIR__ . '/../Resources/views'));
+        //$app['twig.loader']->addLoader(new \Twig_Loader_Filesystem(__DIR__ . '/../Resources/views'));
     }
 
     /**
@@ -41,6 +42,7 @@ class ShortyServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
+        $app['kurl.base62'] = $app->share(function() { return new Base62(); });
         $app['kurl.service.url_shortener'] = new UrlShortener($app['db']);
         $app['app.default_controller'] = $app->share(
             function () use ($app) {
@@ -48,9 +50,18 @@ class ShortyServiceProvider implements ServiceProviderInterface
             }
         );
 
+        $app['app.api_controller'] = $app->share(
+            function () use ($app) {
+                return new ApiController($app);
+            }
+        );
+
         $app->get('/', 'app.default_controller:indexAction')->bind('kurl_shorty');
+        $app->get('/statistics', 'app.default_controller:statisticsAction')->bind('kurl_shorty_statistics');
         $app->post('/', 'app.default_controller:indexAction')->bind('kurl_shorty_create');
         $app->get('/{id}', 'app.default_controller:redirectAction')->bind('kurl_shorty_redirect');
         $app->get('/{id}/details', 'app.default_controller:detailsAction')->bind('kurl_shorty_details');
+
+        $app->get('/api/urls', 'app.api_controller:getLinksAction')->bind('kurl_shorty_api_urls');
     }
 }

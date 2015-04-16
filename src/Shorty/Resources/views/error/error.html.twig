@@ -1,0 +1,16 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Error {{ code }}{% endblock %}
+
+{% block body_content %}
+<section>
+    <div class="container">
+        <h1>Oops, an error {{ code }} occurred</h1>
+        <p>{{ exception.message }}</p>
+
+        {% block error %}{% endblock %}
+    </div>
+</section>
+{% endblock %}
+
+

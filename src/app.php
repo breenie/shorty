@@ -25,4 +25,8 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'translator.messages' => array(),
 ));
 
+$app->register(new \Shorty\Provider\ShortyServiceProvider());
+$app->register(new \Kurl\Silex\Provider\ErrorTemplateProvider());
+$app->register(new \Kurl\Silex\Auth\Provider\AuthServiceProvider());
+
 return $app;

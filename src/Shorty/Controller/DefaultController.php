@@ -13,6 +13,7 @@ use Silex\Application;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DefaultController
 {
@@ -50,7 +51,6 @@ class DefaultController
     public function indexAction(Request $request)
     {
         $form = $this->getForm();
-
         $form->handleRequest($request);
 
         if (true === $form->isValid()) {
@@ -66,7 +66,12 @@ class DefaultController
                 )
             );
 
-            return $this->app->redirect('/');
+            return $this->app->redirect(
+                $this->app['url_generator']->generate(
+                    'kurl_shorty_details',
+                    array('id' => $this->encoder->encode($id))
+                )
+            );
         }
 
         return new Response(
@@ -115,6 +120,16 @@ class DefaultController
     }
 
     /**
+     * Renders the stats page.
+     *
+     * @return Response
+     */
+    public function statisticsAction()
+    {
+        return new Response($this->app['twig']->render('default/statistics.html.twig'), 200);
+    }
+
+    /**
      * Gets the create URL form.
      *
      * @return Form
@@ -138,20 +153,12 @@ class DefaultController
      */
     private function generateShortenedUrl($id)
     {
-        /** @var Request $request */
-        $request = $this->app['request'];
-
         /** @noinspection PhpParamsInspection */
 
-        return sprintf(
-            '%1$s://%2$s%3$s%4$s',
-            $request->getScheme(),
-            $request->getHost(),
-            80 === (int)$request->getPort() ? '' : ':' . $request->getPort(),
-            $this->app['url_generator']->generate(
-                'kurl_shorty_redirect',
-                array('id' => $this->encoder->encode($id))
-            )
+        return $this->app['url_generator']->generate(
+            'kurl_shorty_redirect',
+            array('id' => $this->encoder->encode($id)),
+            UrlGeneratorInterface::ABSOLUTE_URL
         );
     }
 

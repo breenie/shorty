@@ -15,7 +15,6 @@
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>./src/Shorty/Tests</directory>
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
@@ -25,7 +24,7 @@
             <directory>./src</directory>
             <exclude>
                 <directory>./src/Shorty/Resources</directory>
-                <directory>./src/Shorty/Tests</directory>
+                <directory>./src/Shorty/Migrations</directory>
                 <directory>./src/Shorty/Exception</directory>
             </exclude>
         </whitelist>

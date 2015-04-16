@@ -1,0 +1,5 @@
+{% extends "error/error.html.twig" %}
+
+{% block error %}
+    <p>"{{ app.request.uri }}" was lost or destroyed.</p>
+{% endblock %}

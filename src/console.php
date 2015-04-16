@@ -92,8 +92,7 @@ EOF
             }
 
             return $process->getExitCode();
-        })
-;
+        });
 
 $app->register(
     new \Kurl\Silex\Provider\DoctrineMigrationsProvider($console),

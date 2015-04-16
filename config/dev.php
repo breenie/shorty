@@ -1,6 +1,6 @@
 <?php
 
-use Silex\Provider\WebProfilerServiceProvider;
+use Kurl\Silex\Provider\WebProfilerServiceProvider;
 
 // include the prod configuration
 require __DIR__ . '/prod.php';
@@ -17,6 +17,9 @@ $app['db.options']      = array(
     'user'     => 'root',
     'password' => 'root'
 );
+
+$app['oauth.services.google.key'] = '1043378317437-28gh0nh49o9g3v8sppqvr7oc4dtk4ohq.apps.googleusercontent.com';
+$app['oauth.services.google.secret'] = 'VnzIQloHrFdkb7-9N3466nM3';
 
 $app->register(
     new WebProfilerServiceProvider(),
