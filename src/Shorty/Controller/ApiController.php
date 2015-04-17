@@ -43,14 +43,21 @@ class ApiController
         $links = $db->query('select * from shorty_url order by id desc limit 10')->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($links as $key => $url) {
+            $links[$key]['details_link'] = $this->shortLink($url['id'], 'kurl_shorty_details');
             $links[$key]['clicks'] = rand(0, 100000);
-            $links[$key]['short_link'] = $this->app['url_generator']->generate(
-                'kurl_shorty_redirect',
-                ['id' => $this->app['kurl.base62']->encode($url['id'])],
-                UrlGeneratorInterface::ABSOLUTE_URL
-            );
+            $links[$key]['short_link'] = $this->shortLink($url['id'], 'kurl_shorty_redirect');
         }
 
         return new JsonResponse($links);
+    }
+
+    private function shortLink($id, $route)
+    {
+        return $this->app['url_generator']->generate(
+            $route,
+            ['id' => $this->app['kurl.base62']->encode($id)],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+
     }
 }

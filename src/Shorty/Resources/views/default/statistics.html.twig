@@ -29,7 +29,7 @@
                     <td><a href="{{ url.short_link }}">{{ url.short_link }}</a></td>
                     <td><a href="{{ url.url }}">{{ url.url }}</a></td>
                     <td>{{ url.created | date:'MM/dd/yyyy @ h:mma' }}</td>
-                    <td>{{ url.clicks | number }}</td>
+                    <td><a href="{{ url.details_link }}">{{ url.clicks | number }}</a></td>
                     {% endverbatim %}
                 </tr>
                 </tbody>

@@ -43,6 +43,9 @@ class ShortyServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         $app['kurl.base62'] = $app->share(function() { return new Base62(); });
+
+        // $app['shorty.url_generator']
+
         $app['kurl.service.url_shortener'] = new UrlShortener($app['db']);
         $app['app.default_controller'] = $app->share(
             function () use ($app) {
