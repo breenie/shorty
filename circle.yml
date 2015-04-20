@@ -8,10 +8,9 @@ dependencies:
 deployment:
     staging:
         branch: develop
-        heroku:
-            appname: shorty-stage
         commands:
             - heroku maintenance:on --app shorty-stage
+            - git push git@heroku.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
             - bin/console --env=prod migrations:migrate
             - heroku maintenance:off --app shorty-stage
 
