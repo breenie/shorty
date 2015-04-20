@@ -9,9 +9,13 @@ deployment:
     staging:
         branch: develop
         heroku:
-            appname: kurl-shorty-staging
+            appname: shorty-stage
+        commands:
+            - heroku maintenance:on --app shorty-stage
+            - bin/console --env=prod migrations:migrate
+            - heroku maintenance:off --app shorty-stage
 
     production:
         branch: master
         heroku:
-            appname: kurl-shorty
+            appname: shorty-production
