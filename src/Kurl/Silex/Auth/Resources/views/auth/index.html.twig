@@ -1,0 +1,26 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Login{% endblock %}
+
+{% block body_content %}
+
+    <div class="container">
+        <section>
+            {% if app.user %}
+                <div class="page-header">
+                    <h1>Hello {{ app.user.username }}!</h1>
+                </div>
+
+                <p>You're logged in as {{ app.user.email }}</p>
+                <a href="{{ path('logout', {_csrf_token: csrf_token('logout')}) }}">Logout</a>
+            {% else %}
+                <form class="form-signin">
+                    <a href="{{ login_paths.google }}" class="btn btn-lg btn-primary btn-block btn-google-plus">Sign in with Google</a>
+                    <a class="btn btn-lg btn-primary btn-block btn-twitter">Sign in with Twitter</a>
+                    <a class="btn btn-lg btn-primary btn-block btn-facebook">Sign in with Facebook</a>
+                    <a class="btn btn-lg btn-primary btn-block btn-github">Sign in with GitHub</a>
+                </form>
+            {% endif %}
+        </section>
+    </div>
+
+{% endblock %}

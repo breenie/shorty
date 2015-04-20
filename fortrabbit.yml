@@ -1,0 +1,6 @@
+---
+
+version: 1
+composer:
+    method: install
+    mode: always

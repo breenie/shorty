@@ -2,4 +2,16 @@
 
 dependencies:
     override:
+        # Stop the circleci composer install getting confused by download type "vcs"
         - composer install --prefer-dist --no-interaction
+
+deployment:
+    staging:
+        branch: develop
+        heroku:
+            appname: kurl-shorty-staging
+
+    production:
+        branch: master
+        heroku:
+            appname: kurl-shorty
