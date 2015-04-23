@@ -18,3 +18,9 @@ deployment:
         branch: master
         heroku:
             appname: shorty-production
+
+    fortrabbit_stage:
+        branch: develop
+        commands:
+            - git push git@git1.eu1.frbit.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
+            - ssh ssh u-shorty-stage@ssh37.eu1.frbit.com php htdocs/bin/console --env=prod migrations:migrate --no-interaction
