@@ -23,4 +23,4 @@ deployment:
         branch: develop
         commands:
             - git push git@git1.eu1.frbit.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
-            - ssh u-shorty-stage@ssh37.eu1.frbit.com php ". /etc/profile.envvars && php htdocs/bin/console --env=prod migrations:status --no-interaction"
+            - ssh u-shorty-stage@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod migrations:migrate --no-interaction"
