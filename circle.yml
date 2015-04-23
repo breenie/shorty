@@ -6,20 +6,20 @@ dependencies:
         - composer install --prefer-dist --no-interaction
 
 deployment:
-    staging:
-        branch: develop
-        commands:
-            - heroku maintenance:on --app shorty-stage
-            - git push git@heroku.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
-            - heroku run --app shorty-stage bin/console --env=prod migrations:migrate --no-interaction
-            - heroku maintenance:off --app shorty-stage
+#    staging:
+#        branch: develop
+#        commands:
+#            - heroku maintenance:on --app shorty-stage
+#            - git push git@heroku.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
+#            - heroku run --app shorty-stage bin/console --env=prod migrations:migrate --no-interaction
+#            - heroku maintenance:off --app shorty-stage
 
     production:
         branch: master
         heroku:
             appname: shorty-production
 
-    fortrabbit_stage:
+    staging:
         branch: develop
         commands:
             - git push git@git1.eu1.frbit.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
