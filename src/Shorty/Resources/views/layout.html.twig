@@ -9,14 +9,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>{% block title %}Shorty - Yes, we need another URL shortener{% endblock %}</title>
 
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/css/shorty.css" rel="stylesheet"/>
-    {% block head %}{% endblock %}
-    <link rel="shortcut icon" href="{{ app.request.basePath }}/favicon.ico"/>
+    {# TODO consider using the real CDNs for vendor libs #}
+    {#<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" />#}
+    {#<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>#}
+    {#<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>#}
 
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
-    <script src="/js/ui-bootstrap-0.12.1.min.js"></script>
+    {% stylesheets '@bootstrap_css' '@krl_css' filter='?cssmin' %}
+    <link href="{{ app.asset_path }}/{{ asset_url }}" type="text/css" rel="stylesheet" media="screen"/>
+    {% endstylesheets %}
+
+    <link rel="shortcut icon" href="{{ app.request.basePath }}/favicon.ico" />
+
+    {% javascripts '@angular' filter='?jsmin' %}
+    <script src="{{ app.asset_path }}/{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% block head %}{% endblock %}
 </head>
 <body{% block body_attributes %}{% endblock %} ng-controller="ShortyController">
 
@@ -38,8 +46,10 @@
     </footer>
 {% endblock %}
 
-<script src="/js/services.js"></script>
-<script src="/js/controllers.js"></script>
+{#'@bootstrap_js'#}
+{% javascripts '@krl_js' filter='?jsmin' %}
+<script src="{{ app.asset_path }}/{{ asset_url }}"></script>
+{% endjavascripts %}
 
 </body>
 </html>

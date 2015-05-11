@@ -28,9 +28,14 @@
         "doctrine/migrations": "1.0.*@dev",
         "gigablah/silex-oauth": "~0.1",
         "mheap/silex-assetic": "~1.0",
+        "natxet/CssMin": "3.0.2",
+        "mrclay/minify": "~2.2",
         "kurl/base62": "~1.0",
         "kurl/silex-doctrine-migrations-provider": "~0.1",
         "kurl/silex-error-template-provider": "~0.1",
+        "components/bootstrap": "3.3.1",
+        "components/angular.js": "~1.2",
+        "components/angular-resource": "~1.2",
         "angular-ui/bootstrap": "dev-master"
     },
     "require-dev": {

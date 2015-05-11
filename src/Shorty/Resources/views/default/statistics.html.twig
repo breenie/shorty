@@ -26,7 +26,7 @@
                 <tbody>
                 <tr ng-repeat="url in urls">
                     {% verbatim %}
-                    <td><a href="{{ url.short_link }}">{{ url.short_link }}</a></td>
+                    <td><a href="{{ url.short_link }}">{{ url.short_link | remove_scheme }}</a></td>
                     <td><a href="{{ url.url }}">{{ url.url }}</a></td>
                     <td>{{ url.created | date:'MM/dd/yyyy @ h:mma' }}</td>
                     <td><a href="{{ url.details_link }}">{{ url.clicks | number }}</a></td>
