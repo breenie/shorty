@@ -1,0 +1,31 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-brand">
+                <a href="{{ path('kurl_shorty') }}">Shorty</a>
+                <small>Yes, we need another URL shortener</small>
+            </div>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav pull-right">
+                <li>
+                    <a href="{{ path('kurl_shorty_statistics') }}">Statistics</a>
+                </li>
+                <li>
+                    {% if app.user %}
+                    <a href="{{ path('logout', {_csrf_token: csrf_token('logout')}) }}">Logout</a>
+                    {% else %}
+                    <a href="{{ path('login') }}">Login</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+

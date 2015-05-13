@@ -1,6 +1,7 @@
 <?php
 
 use Silex\Application;
+use Silex\Provider\FormServiceProvider;
 use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
@@ -17,6 +18,15 @@ $app['twig'] = $app->share($app->extend('twig', function ($twig, $app) {
 
     return $twig;
 }));
+$app->register(new FormServiceProvider());
+$app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new MonologServiceProvider());
+$app->register(new Silex\Provider\TranslationServiceProvider(), array(
+    'translator.messages' => array(),
+));
+
+$app->register(new \Shorty\Provider\ShortyServiceProvider());
+$app->register(new \Kurl\Silex\Provider\ErrorTemplateProvider());
+$app->register(new \Kurl\Silex\Auth\Provider\AuthServiceProvider());
 
 return $app;

@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+{% import 'macros.html.twig' as kurl %}
+{% block title %}Details for short link "{{ short_url }}"{% endblock %}
+{% block flash_messages %}{% endblock %}
+
+{% block body_content %}
+
+    <div class="container">
+        <div>
+            {{ kurl.render_flashbags(app.session.flashbag.all) }}
+        </div>
+
+        <section>
+            <div class="page-header">
+                <h1>Details for short link <a href="{{ short_url }}">{{ id }}</a></h1>
+            </div>
+
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>Short</th>
+                        <td><a href="{{ short_url }}">{{ short_url }}</a></td>
+                    </tr>
+                    <tr>
+                        <th>Long</th>
+                        <td><a href="{{ details.url }}">{{ details.url }}</a></td>
+                    </tr>
+                    <tr>
+                        <th>Created</th>
+                        <td>{{ details.created|date("Y/d/m H:i:s") }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+    </div>
+{% endblock %}

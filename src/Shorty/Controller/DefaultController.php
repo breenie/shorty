@@ -1,55 +1,180 @@
 <?php
 /**
- * An example controller.
+ * - DefaultController.php
  *
- * @author chris
- * @created 19/11/14 14:38
+ * @author  chris
+ * @created 09/03/15 12:45
  */
 
 namespace Shorty\Controller;
 
-use Psr\Log\LoggerInterface;
+use Kurl\Maths\Encode\Base62;
+use Silex\Application;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-/**
- * Class DefaultController
- *
- * @package App\Controller
- */
 class DefaultController
 {
-    /**
-     * @var Twig_Environment
-     */
-    protected $twig;
 
     /**
-     * @var LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * Creates a new controller.
+     * The silex app.
      *
-     * @param Twig_Environment $twig
-     * @param LoggerInterface  $logger
+     * @var Application
      */
-    public function __construct(Twig_Environment $twig, LoggerInterface $logger)
+    private $app;
+
+    /**
+     * The URL hash creator/decoder.
+     *
+     * @var Base62
+     */
+    private $encoder;
+
+    /**
+     * @param Application $app
+     */
+    public function __construct(Application $app)
     {
-        $this->twig = $twig;
-        $this->logger = $logger;
+        $this->app     = $app;
+        $this->encoder = new Base62();
     }
 
     /**
      * A default action.
      *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function indexAction(Request $request)
+    {
+        $form = $this->getForm();
+        $form->handleRequest($request);
+
+        if (true === $form->isValid()) {
+            $data = $form->getData();
+
+            $id = $this->app['kurl.service.url_shortener']->create($data['short_url']);
+
+            $this->app['session']->getFlashBag()->add(
+                'success',
+                sprintf(
+                    'Created new short URL: <a href="%1$s" class="alert-link">%1$s</a>.',
+                    $this->generateShortenedUrl($id)
+                )
+            );
+
+            return $this->app->redirect(
+                $this->app['url_generator']->generate(
+                    'kurl_shorty_details',
+                    array('id' => $this->encoder->encode($id))
+                )
+            );
+        }
+
+        return new Response(
+            $this->app['twig']->render('default/index.html.twig', array('form' => $form->createView())),
+            200
+        );
+    }
+
+    /**
+     * Redirects a user to the long URL.
+     *
+     * @param Request $request
+     * @param int     $id
+     *
+     * @return Response
+     */
+    public function redirectAction(Request $request, $id)
+    {
+        $shortened = $this->findUrl($id);
+
+        $this->app['kurl.service.url_shortener']->registerClick($id, $request->headers->get('User-Agent'));
+
+        return $this->app->redirect($shortened['url']);
+    }
+
+    /**
+     * Renders link details.
+     *
+     * @param $id
+     *
+     * @return Response
+     */
+    public function detailsAction($id)
+    {
+        return new Response(
+            $this->app['twig']->render(
+                'default/details.html.twig',
+                array(
+                    'details'   => $this->findUrl($id),
+                    'id'        => $id,
+                    'short_url' => $this->generateShortenedUrl($this->encoder->decode($id)),
+                )
+            ),
+            200
+        );
+    }
+
+    /**
+     * Renders the stats page.
+     *
+     * @return Response
+     */
+    public function statisticsAction()
+    {
+        return new Response($this->app['twig']->render('default/statistics.html.twig'), 200);
+    }
+
+    /**
+     * Gets the create URL form.
+     *
+     * @return Form
+     */
+    private function getForm()
+    {
+        $form = $this->app['form.factory']->createBuilder('form')
+            ->setMethod('POST')
+            ->add('short_url', 'url', array('required' => true))
+            ->getForm();
+
+        return $form;
+    }
+
+    /**
+     * Generates the full short URL for an ID.
+     *
+     * @param string $id
+     *
      * @return string
      */
-    public function indexAction()
+    private function generateShortenedUrl($id)
     {
-        $this->logger->debug(sprintf('Dispatching: %1$s::%2$s', __CLASS__, __METHOD__));
+        /** @noinspection PhpParamsInspection */
 
-        return $this->twig->render('default/index.html.twig', array('title' => 'Boom!'));
+        return $this->app['url_generator']->generate(
+            'kurl_shorty_redirect',
+            array('id' => $this->encoder->encode($id)),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+    }
+
+    /**
+     * Finds a URL by its hash looking identifier.
+     *
+     * @param string $id
+     *
+     * @return array|null
+     */
+    private function findUrl($id)
+    {
+        if (null === $shortened = $this->app['kurl.service.url_shortener']->find($this->encoder->decode($id))) {
+            $this->app->abort(404, sprintf('URL "%1$s" cannot be found, boo :(.', $id));
+        }
+
+        return $shortened;
     }
 }

@@ -2,4 +2,26 @@
 
 dependencies:
     override:
+        # Stop the circleci composer install getting confused by download type "vcs"
         - composer install --prefer-dist --no-interaction
+
+deployment:
+#    staging:
+#        branch: develop
+#        commands:
+#            - heroku maintenance:on --app shorty-stage
+#            - git push git@heroku.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
+#            - heroku run --app shorty-stage bin/console --env=prod migrations:migrate --no-interaction
+#            - heroku maintenance:off --app shorty-stage
+
+    production:
+        branch: master
+        commands:
+            - git push git@git8.eu1.frbit.com:shorty.git $CIRCLE_SHA1:refs/heads/master
+            - ssh u-shorty@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod migrations:migrate --no-interaction"
+
+    staging:
+        branch: develop
+        commands:
+            - git push git@git1.eu1.frbit.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
+            - ssh u-shorty-stage@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod migrations:migrate --no-interaction"

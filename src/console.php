@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\ProcessBuilder;
 
-$console = new Application('My Silex Application', 'n/a');
+$console = new Application('Shorty console', '0.0.0');
 $console->getDefinition()->addOption(new InputOption('--env', '-e', InputOption::VALUE_REQUIRED, 'The Environment name.', 'dev'));
 $console->setDispatcher($app['dispatcher']);
 $console
@@ -92,7 +92,16 @@ EOF
             }
 
             return $process->getExitCode();
-        })
-;
+        });
+
+$app->register(
+    new \Kurl\Silex\Provider\DoctrineMigrationsProvider($console),
+    array(
+        'migrations.namespace'  => $app['migrations.namespace'],
+        'migrations.directory'  => $app['migrations.directory'],
+        'migrations.name'       => $app['migrations.name'],
+        'migrations.table_name' => $app['migrations.table_name'],
+    )
+);
 
 return $console;
