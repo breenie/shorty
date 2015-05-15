@@ -6,22 +6,32 @@ dependencies:
         - composer install --prefer-dist --no-interaction
 
 deployment:
-#    staging:
-#        branch: develop
-#        commands:
-#            - heroku maintenance:on --app shorty-stage
-#            - git push git@heroku.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
-#            - heroku run --app shorty-stage bin/console --env=prod migrations:migrate --no-interaction
-#            - heroku maintenance:off --app shorty-stage
-
     production:
         branch: master
         commands:
+            # Push to heroku production
+            - heroku maintenance:on --app shorty-prod
+            - git push git@heroku.com:shorty-prod.git $CIRCLE_SHA1:refs/heads/master
+            - heroku run --app shorty-prod bin/console --env=prod migrations:migrate --no-interaction
+            - heroku run --app shorty-prod bin/console --env=prod assetic:dump
+            - heroku maintenance:off --app shorty-prod
+
+            # Push to fortrabbit production
             - git push git@git8.eu1.frbit.com:shorty.git $CIRCLE_SHA1:refs/heads/master
             - ssh u-shorty@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod migrations:migrate --no-interaction"
+            - ssh u-shorty@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod assetic:dump"
 
     staging:
         branch: develop
         commands:
+            # Push to heroku stage
+            - heroku maintenance:on --app shorty-stage
+            - git push git@heroku.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
+            - heroku run --app shorty-stage bin/console --env=prod migrations:migrate --no-interaction
+            - heroku run --app shorty-stage bin/console --env=prod assetic:dump
+            - heroku maintenance:off --app shorty-stage
+
+            # Push to fortrabbit stage
             - git push git@git1.eu1.frbit.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
             - ssh u-shorty-stage@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod migrations:migrate --no-interaction"
+            - ssh u-shorty-stage@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod assetic:dump"

@@ -39,6 +39,20 @@ code {
 }
 
 /*
+ * Overflow links in tables.
+ */
+
+.table {
+    table-layout:fixed;
+}
+
+.table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/*
  * Sign-in page
  *
  * Stolen from http://getbootstrap.com/examples/signin/signin.css
