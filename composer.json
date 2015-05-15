@@ -61,7 +61,7 @@
         "post-install-cmd": [],
         "post-update-cmd": [],
         "compile": [
-            "app/console assetic:dump"
+            "bin/console assetic:dump"
         ]
     },
     "bin": [
