@@ -2,7 +2,7 @@
     "name": "kurl/shorty",
     "description": "Another URL shortener",
     "license": "MIT",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "type": "project",
     "require": {
         "php": ">=5.3.3",
