@@ -12,7 +12,6 @@ deployment:
             # Push to heroku production
             - heroku maintenance:on --app shorty-prod
             - git push git@heroku.com:shorty-prod.git $CIRCLE_SHA1:refs/heads/master
-            - heroku run --app shorty-prod bin/console --env=prod migrations:migrate --no-interaction
             - heroku maintenance:off --app shorty-prod
 
             # Push to fortrabbit production
@@ -26,7 +25,6 @@ deployment:
             # Push to heroku stage
             - heroku maintenance:on --app shorty-stage
             - git push git@heroku.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
-            - heroku run --app shorty-stage bin/console --env=prod migrations:migrate --no-interaction
             - heroku maintenance:off --app shorty-stage
 
             # Push to fortrabbit stage
