@@ -14,7 +14,7 @@ $app['cdn_host'] = getenv('CDN_HOST') ?: 'krlcdn-14a4.kxcdn.com';
 // {{ app.asset_path }}/css/styles.css
 $app['asset_path'] = $app->share(function ($app) {
     // implement whatever logic you need to determine the asset path
-
+    return ''; // Disable CDN until it works :(.
     return true === $app['debug'] ? '' : '//' . $app['cdn_host'];
 });
 
