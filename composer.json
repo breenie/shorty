@@ -61,7 +61,7 @@
         "post-install-cmd": [],
         "post-update-cmd": [],
         "compile": [
-            "bin/console migrations:migrate",
+            "bin/console migrations:migrate --no-interaction",
             "bin/console assetic:dump"
         ]
     },
