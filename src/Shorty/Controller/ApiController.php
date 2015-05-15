@@ -46,6 +46,7 @@ select
     u.id, u.url, u.created, count(v.shorty_url_id) as clicks
 from shorty_url u
 left join shorty_url_visit v on v.shorty_url_id = u.id
+group by u.id
 order by u.id desc limit 10
 EOT
         )->fetchAll(PDO::FETCH_ASSOC);
