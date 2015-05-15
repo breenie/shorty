@@ -94,6 +94,66 @@ EOF
             return $process->getExitCode();
         });
 
+$console
+    ->register('assetic:dump')
+    ->setDefinition(array(
+        new InputOption('write_to', null, InputArgument::OPTIONAL, 'Override the configured asset root'),
+    ))
+    ->setHelp(
+        <<<EOF
+The <info>%command.name%</info> runs PHP built-in web server:
+
+  <info>%command.full_name%</info>
+
+To change default bind address and port use the <info>address</info> argument:
+
+  <info>%command.full_name% 127.0.0.1:8080</info>
+
+To change default docroot directory use the <info>--docroot</info> option:
+
+  <info>%command.full_name% --docroot=htdocs/</info>
+
+See also: http://www.php.net/manual/en/features.commandline.webserver.php
+EOF
+
+    )
+    ->setDescription('Dumps all assets to the filesystem')
+    ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
+        //    $this->basePath = $input->getArgument('write_to') ?: $this->app['assetic.path_to_web'];
+
+        $helper = $app['assetic.dumper'];
+
+        if (isset($app['twig'])) {
+            $helper->addTwigAssets();
+        }
+
+        $helper->dumpAssets();
+    });
+
+//parent::__construct('assetic:dump');
+//}
+//
+//protected function configure()
+//{
+//    $this
+//        ->setDescription('Dumps all assets to the filesystem')
+//        ->addArgument('write_to', InputArgument::OPTIONAL, 'Override the configured asset root')
+//    ;
+//}
+//
+//protected function initialize(InputInterface $input, OutputInterface $output)
+//{
+//    $this->basePath = $input->getArgument('write_to') ?: $this->app['assetic.path_to_web'];
+//    $this->verbose = $input->getOption('verbose');
+
+//$helper = $this->app['assetic.dumper'];
+//
+//if (isset($this->app['twig'])) {
+//    $helper->addTwigAssets();
+//}
+//$helper->dumpAssets();
+
+
 $app->register(
     new \Kurl\Silex\Provider\DoctrineMigrationsProvider($console),
     array(

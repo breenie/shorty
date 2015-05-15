@@ -12,10 +12,10 @@ $app['monolog.logfile'] = __DIR__ . '/../var/logs/silex_dev.log';
 $app['db.options']      = array(
     'driver'   => 'pdo_mysql',
     'dbname'   => 'shorty',
-    'host'     => '10.0.0.2',
+    'host'     => '127.0.0.1',
     'port'     => '3306',
     'user'     => 'root',
-    'password' => 'root'
+    'password' => ''
 );
 
 $app['oauth.services.google.key'] = '1043378317437-28gh0nh49o9g3v8sppqvr7oc4dtk4ohq.apps.googleusercontent.com';

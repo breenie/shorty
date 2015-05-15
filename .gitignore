@@ -3,5 +3,6 @@ bin
 web/components
 vendor
 build
-
+web/css
+web/js
 .env

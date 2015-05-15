@@ -8,13 +8,15 @@ $app['twig.path']       = array(
 $app['twig.options']    = array('cache' => __DIR__ . '/../var/cache/twig');
 $app['asset_path']      = '/components';
 
+$app['cdn_host'] = getenv('CDN_HOST') ?: 'krlcdn-14a4.kxcdn.com';
+
 // TODO sort out this to use a CDN for production and local for local obviously.
 // {{ app.asset_path }}/css/styles.css
-//$app['asset_path'] = $app->share(function () {
-//    // implement whatever logic you need to determine the asset path
-//
-//    return 'http://assets.examples.com';
-//});
+$app['asset_path'] = $app->share(function ($app) {
+    // implement whatever logic you need to determine the asset path
+    return ''; // Disable CDN until it works :(.
+    return true === $app['debug'] ? '' : '//' . $app['cdn_host'];
+});
 
 $app['monolog.logfile'] = __DIR__ . '/../var/logs/silex_prod.log';
 

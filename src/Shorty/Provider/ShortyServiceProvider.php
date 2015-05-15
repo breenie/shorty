@@ -66,5 +66,6 @@ class ShortyServiceProvider implements ServiceProviderInterface
         $app->get('/{id}/details', 'app.default_controller:detailsAction')->bind('kurl_shorty_details');
 
         $app->get('/api/urls', 'app.api_controller:getLinksAction')->bind('kurl_shorty_api_urls');
+        $app->get('/api/urls/{id}', 'app.api_controller:getLinkAction')->bind('kurl_shorty_api_url');
     }
 }
