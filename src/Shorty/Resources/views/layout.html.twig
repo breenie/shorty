@@ -14,6 +14,7 @@
     {#<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>#}
     {#<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>#}
 
+    {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>#}
     {% stylesheets '@bootstrap_css' '@krl_css' filter='?cssmin' %}
     <link href="{{ app.asset_path }}/{{ asset_url }}" type="text/css" rel="stylesheet" media="screen"/>
     {% endstylesheets %}
@@ -46,8 +47,8 @@
     </footer>
 {% endblock %}
 
-{#'@bootstrap_js'#}
-{% javascripts '@krl_js' filter='?jsmin' %}
+{##}
+{% javascripts '@bootstrap_js' '@krl_js' filter='?jsmin' %}
 <script src="{{ app.asset_path }}/{{ asset_url }}"></script>
 {% endjavascripts %}
 

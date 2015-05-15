@@ -35,8 +35,12 @@ $app['assetic_librarian.assets'] = array(
         'filters' => array('?cssmin'),
         'options' => array('output' => 'css/bootstrap.css'),
     ),
+    // TODO figure out why on earth assetic refuses to order dumped assets correctly.
     'bootstrap_js' => array(
-        'assets' => array(__DIR__ . '/../vendor/components/bootstrap/js/bootstrap.min.js'),
+        'assets' => array(
+            //__DIR__ . '/../vendor/components/bootstrap/js/bootstrap.min.js',
+            __DIR__ . '/../vendor/tagawa/bootstrap-without-jquery/bootstrap-without-jquery.min.js',
+        ),
         'filters' => array('?jsmin'),
         'options' => array('output' => 'js/bootstrap.js'),
     ),
@@ -81,7 +85,8 @@ $app['assetic.filter_manager'] = $app->share(
 
 $app['assetic.path_to_web'] = __DIR__ . '/../web';
 $app['assetic.options'] = array(
-    'formulae_cache_dir' => __DIR__ . '/../var/cache/assetic',
+    'formulae_cache_dir' => __DIR__ . '/../var/cache/assetic-formulae',
+    'cache_dir' => __DIR__ . '/../var/cache/assetic',
     'debug'              => false,
     'auto_dump_assets' => false
 );
@@ -99,7 +104,7 @@ $app['assetic.factory'] = $app->share(
                 $name,
                 new \Assetic\Asset\AssetCache(
                     $factory->createAsset($set['assets'], $set['filters'], $set['options']),
-                    new Assetic\Cache\FilesystemCache($app['assetic.options']['formulae_cache_dir'])
+                    new Assetic\Cache\FilesystemCache($app['assetic.options']['cache_dir'])
                 )
             );
         }

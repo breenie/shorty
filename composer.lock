@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cc3cb0c6dacb23ec6cc0ec9b2d0cb12b",
+    "hash": "44a7fe9e41c1f35410392bd90b51fc64",
     "packages": [
         {
             "name": "angular-ui/bootstrap",
@@ -1244,6 +1244,17 @@
                 "framework"
             ],
             "time": "2014-12-03 16:40:43"
+        },
+        {
+            "name": "tagawa/bootstrap-without-jquery",
+            "version": "0.6.1",
+            "dist": {
+                "type": "file",
+                "url": "https://raw.githubusercontent.com/tagawa/bootstrap-without-jquery/master/bootstrap3/bootstrap-without-jquery.min.js",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
         },
         {
             "name": "twig/twig",
