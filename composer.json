@@ -59,7 +59,10 @@
     },
     "scripts": {
         "post-install-cmd": [],
-        "post-update-cmd": []
+        "post-update-cmd": [],
+        "compile": [
+            "app/console assetic:dump"
+        ]
     },
     "bin": [
         "bin/console"
