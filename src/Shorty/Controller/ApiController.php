@@ -9,8 +9,10 @@
 namespace Shorty\Controller;
 
 use PDO;
+use Shorty\Service\UrlShortener;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ApiController
@@ -33,29 +35,21 @@ class ApiController
     /**
      * Gets a list of URLs.
      *
+     * @param Request $request
+     *
      * @return JsonResponse
      */
-    public function getLinksAction()
+    public function getLinksAction(Request $request)
     {
-        /** @var \Doctrine\DBAL\Connection $db */
-        $db = $this->app['db'];
+        /** @var UrlShortener $service */
+        $service = $this->app['kurl.service.url_shortener'];
+        $results = $service->paginate(
+            (int)$request->get('offset') ?: 0,
+            (int)$request->get('limit') ?: 10,
+            0 === strcasecmp('asc', $request->get('direction')) ? SORT_ASC : SORT_DESC
+        );
 
-        $links = $db->query(
-            <<<EOT
-select
-    u.id, u.url, u.created, count(v.shorty_url_id) as clicks
-from shorty_url u
-left join shorty_url_visit v on v.shorty_url_id = u.id
-group by u.id
-order by u.id desc limit 10
-EOT
-        )->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($links as $key => $url) {
-            $links[$key] = $this->formatResult($links[$key]);
-        }
-
-        return new JsonResponse($links);
+        return new JsonResponse($results);
     }
 
     /**

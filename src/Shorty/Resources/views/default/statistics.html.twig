@@ -24,12 +24,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="url in urls">
+                <tr ng-repeat="url in urls.results">
                     {% verbatim %}
-                    <td><a href="{{ url.short_link }}">{{ url.short_link | remove_scheme }}</a></td>
+                    <td><a href="{{ url.id }}">{{ hostname }}/{{ url.id }}</a></td>
                     <td><a href="{{ url.url }}">{{ url.url }}</a></td>
                     <td>{{ url.created | date:'MM/dd/yyyy @ h:mma' }}</td>
-                    <td><a href="{{ url.details_link }}">{{ url.clicks | number }}</a></td>
+                    <td><a href="{{ url.id }}">{{ url.clicks | number }}</a></td>
                     {% endverbatim %}
                 </tr>
                 </tbody>

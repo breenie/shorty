@@ -14,6 +14,7 @@ use Shorty\Controller\DefaultController;
 use Shorty\Service\UrlShortener;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ShortyServiceProvider implements ServiceProviderInterface
 {
@@ -44,9 +45,17 @@ class ShortyServiceProvider implements ServiceProviderInterface
     {
         $app['kurl.base62'] = $app->share(function() { return new Base62(); });
 
-        // $app['shorty.url_generator']
+        $app['shorty.url_generator'] = $app->share(function($app) {
+            return function ($id) use ($app) {
+                return $app['url_generator']->generate(
+                    'kurl_shorty_redirect',
+                    ['id' => $app['kurl.base62']->encode($id)],
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                );
+            };
+        });
 
-        $app['kurl.service.url_shortener'] = new UrlShortener($app['db']);
+        $app['kurl.service.url_shortener'] = new UrlShortener($app['db'], $app['shorty.url_generator']);
         $app['app.default_controller'] = $app->share(
             function () use ($app) {
                 return new DefaultController($app);
@@ -65,7 +74,7 @@ class ShortyServiceProvider implements ServiceProviderInterface
         $app->get('/{id}', 'app.default_controller:redirectAction')->bind('kurl_shorty_redirect');
         $app->get('/{id}/details', 'app.default_controller:detailsAction')->bind('kurl_shorty_details');
 
-        $app->get('/api/urls', 'app.api_controller:getLinksAction')->bind('kurl_shorty_api_urls');
+        $app->get('/api/urls.json', 'app.api_controller:getLinksAction')->bind('kurl_shorty_api_urls');
         $app->get('/api/urls/{id}', 'app.api_controller:getLinkAction')->bind('kurl_shorty_api_url');
     }
 }

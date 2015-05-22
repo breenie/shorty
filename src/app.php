@@ -59,7 +59,7 @@ $app['assetic_librarian.assets'] = array(
             __DIR__ . '/Shorty/Resources/public/js/controllers.js',
             __DIR__ . '/Shorty/Resources/public/js/filters.js'
         ),
-        'filters' => array('?jsmin'),
+        'filters' => array(),
         'options' => array('output' => 'js/krl.js'),
     ),
     'krl_css' => array(
@@ -87,8 +87,8 @@ $app['assetic.path_to_web'] = __DIR__ . '/../web';
 $app['assetic.options'] = array(
     'formulae_cache_dir' => __DIR__ . '/../var/cache/assetic-formulae',
     'cache_dir' => __DIR__ . '/../var/cache/assetic',
-    'debug'              => false,
-    'auto_dump_assets' => false
+    'debug'              => $app['debug'],
+    'auto_dump_assets' => true
 );
 
 $app->extend('twig', function (\Twig_Environment $twig, Application $app) {

@@ -8,6 +8,7 @@ function ShortyController($scope, Url) {
         $scope.selectedIndex = undefined;
     }
 
+    $scope.hostname = document.location.host;
     $scope.urls = Url.query();
     $scope.addMode = true;
 

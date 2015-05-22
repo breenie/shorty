@@ -47,8 +47,8 @@
     </footer>
 {% endblock %}
 
-{##}
-{% javascripts '@bootstrap_js' '@krl_js' filter='?jsmin' %}
+{#filter='?jsmin'#}
+{% javascripts '@bootstrap_js' '@krl_js'  %}
 <script src="{{ app.asset_path }}/{{ asset_url }}"></script>
 {% endjavascripts %}
 
