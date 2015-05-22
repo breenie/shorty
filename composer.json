@@ -5,7 +5,7 @@
     "version": "0.1.2",
     "type": "project",
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.4.0",
         "silex/silex": "~1.2",
         "silex/web-profiler": "~1.0",
         "symfony/security-bundle": "~2.3",

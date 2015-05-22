@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "273d816b54c9bd81ae8c56364562f3af",
+    "hash": "531a8dcaeb43ed01ad68e5b82e6b15b1",
     "packages": [
         {
             "name": "angular-ui/bootstrap",
@@ -1422,16 +1422,16 @@
         },
         {
             "name": "heroku/heroku-buildpack-php",
-            "version": "v67",
+            "version": "v68",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heroku/heroku-buildpack-php.git",
-                "reference": "8da6b92aad89b2e7254f5eb2ad39ffac315b2282"
+                "reference": "04a7e4f82914744b261d7bae866c85926404964c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/8da6b92aad89b2e7254f5eb2ad39ffac315b2282",
-                "reference": "8da6b92aad89b2e7254f5eb2ad39ffac315b2282",
+                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/04a7e4f82914744b261d7bae866c85926404964c",
+                "reference": "04a7e4f82914744b261d7bae866c85926404964c",
                 "shasum": ""
             },
             "bin": [
@@ -1462,7 +1462,7 @@
                 "nginx",
                 "php"
             ],
-            "time": "2015-03-24 19:49:58"
+            "time": "2015-05-18 14:24:40"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -2327,7 +2327,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.3.3"
+        "php": ">=5.4.0"
     },
     "platform-dev": []
 }
