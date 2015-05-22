@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "531a8dcaeb43ed01ad68e5b82e6b15b1",
+    "hash": "1f1068057b79dff6c1e574757e9c78cc",
     "packages": [
         {
             "name": "angular-ui/bootstrap",
@@ -2327,7 +2327,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": ">=5.4.4"
     },
     "platform-dev": []
 }

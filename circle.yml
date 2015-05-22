@@ -1,5 +1,9 @@
 ---
 
+machine:
+  php:
+    version: 5.4.4 # Seems to be the lowest version in circleci.
+
 dependencies:
     override:
         # Stop the circleci composer install getting confused by download type "vcs"
