@@ -22,7 +22,7 @@
                 <td><a ng-href="/{{ url.id }}">{{ hostname }}/{{ url.id }}</a></td>
                 <td><a ng-href="{{ url.url }}">{{ url.url }}</a></td>
                 <td>{{ url.created | date:'MM/dd/yyyy @ h:mma' }}</td>
-                <td><a href="/{{ url.id }}/details">{{ url.clicks | number }}</a></td>
+                <td><a href="/app/{{ url.id }}/details">{{ url.clicks | number }}</a></td>
 
             </tr>
             </tbody>

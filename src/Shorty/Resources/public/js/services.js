@@ -15,7 +15,7 @@
 (function (angular) {
     'use strict';
 
-    angular.module('shorty.services', ['ngResource']).factory('Url', ['$resource', service]);
+    angular.module('shortyApp.services', ['ngResource']).factory('Url', ['$resource', service]);
 
     function service($resource) {
         return $resource('/api/urls/:id.json', {}, {

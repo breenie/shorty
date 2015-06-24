@@ -1,8 +1,10 @@
+.env
 !bin/console
+bower_components
 bin
-web/components
-vendor
 build
+node_modules
+vendor
 web/css
 web/js
-.env
+web/partials

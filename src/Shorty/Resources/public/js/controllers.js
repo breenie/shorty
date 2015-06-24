@@ -1,12 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('shorty')
-        .controller('Urls', Urls);
-
-    Urls.$inject = ['$scope', '$http', '$location', 'Url'];
-
-    function Urls($scope, $http, $location, Url) {
+    var ShortyController = function($scope, $http, $location, Url, flash) {
         $http.get('/api/urls.json').success(function(data) {
             $scope.urls = data.results;
         });
@@ -18,33 +13,48 @@
         //});
 
         $scope.hostname = $location.host() + (80 == $location.port() ? '' : ':' + $location.port());
-    }
-})(angular);
 
-var shortyControllers = angular.module('shortyControllers', []);
+        $scope.formData = {};
 
-shortyControllers.controller('ShortyController', ['$scope', '$http', '$location', 'Url',
-    function($scope, $http, $location, Url) {
-        $http.get('/api/urls.json').success(function(data) {
-            $scope.urls = data.results;
-        });
+        $scope.createUrl = function() {
 
-        //var result = Url.query();
-        //
-        //$scope.urls = result.then(function(result) {
-        //    return result.results;
-        //});
+            $http({
+                method: 'POST',
+                url: '/api/urls.json',
+                data: {form: $scope.formData},
+                headers : { 'Content-Type': 'application/json', 'Accept': 'application/json' }
+            }).success(function (data, status) {
 
-        $scope.hostname = $location.host() + (80 == $location.port() ? '' : ':' + $location.port());
-    }]);
+                if (201 != status) {
+                    flash.fatal = 'Boo, it done broke it :(.';
+                    return;
+                }
+
+                if (data.id) {
+                    $location.path('/app/' + data.id + '/details');
+                    flash.success = 'Created new shizzle';
+                }
+            });
+        };
+
+    };
+
+    ShortyController.$inject = ['$scope', '$http', '$location', 'Url', 'flash'];
+
+    angular.module('shortyApp')
+        .controller('ShortyController', ShortyController);
 
 
-shortyControllers.controller('ShortyDetailsController', ['$scope', '$routeParams', '$location', 'Url',
-    function($scope, $routeParams, $location, Url) {
+    var ShortyDetailsController = function($scope, $routeParams, $location, Url) {
 
         Url.get({id: $routeParams.id}, function (data) {
             $scope.details = data;
         });
 
         $scope.hostname = $location.host() + (80 == $location.port() ? '' : ':' + $location.port());
-    }]);
+    };
+
+    angular.module('shortyApp')
+        .controller('ShortyDetailsController', ['$scope', '$routeParams', '$location', 'Url', ShortyDetailsController]);
+
+})(angular);
