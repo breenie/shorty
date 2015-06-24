@@ -27,21 +27,14 @@
         "doctrine/dbal": "2.2.*",
         "doctrine/migrations": "1.0.*@dev",
         "gigablah/silex-oauth": "~0.1",
-        "mheap/silex-assetic": "~1.0",
-        "natxet/CssMin": "3.0.2",
-        "mrclay/minify": "~2.2",
         "kurl/base62": "~1.0",
         "kurl/silex-doctrine-migrations-provider": "~0.1",
-        "kurl/silex-error-template-provider": "~0.1",
-        "components/bootstrap": "3.3.1",
-        "components/angular.js": "~1.2",
-        "components/angular-resource": "~1.2",
-        "angular-ui/bootstrap": "dev-master",
-        "tagawa/bootstrap-without-jquery": "~0.6"
+        "kurl/silex-error-template-provider": "~0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.4",
-        "heroku/heroku-buildpack-php": "*"
+        "heroku/heroku-buildpack-php": "*",
+        "kurl/silex-security-profiler-provider": "0.0.1"
     },
     "autoload": {
         "psr-0": {"": "src/"}
@@ -67,18 +60,5 @@
     },
     "bin": [
         "bin/console"
-    ],
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "tagawa/bootstrap-without-jquery",
-                "version": "0.6.1",
-                "dist": {
-                    "url": "https://raw.githubusercontent.com/tagawa/bootstrap-without-jquery/master/bootstrap3/bootstrap-without-jquery.min.js",
-                    "type": "file"
-                }
-            }
-        }
     ]
 }

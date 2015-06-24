@@ -38,7 +38,7 @@ class UrlShortener
      *
      * @param $url
      *
-     * @return string
+     * @return ShortyUrl
      */
     public function create($url)
     {
@@ -52,7 +52,7 @@ class UrlShortener
             )
         );
 
-        return $this->db->lastInsertId();
+        return $this->find($this->db->lastInsertId());
     }
 
     /**
@@ -60,12 +60,21 @@ class UrlShortener
      *
      * @param int $id
      *
-     * @return null|array
+     * @return null|ShortyUrl
      */
     public function find($id)
     {
-        $query = 'select id, url, created from shorty_url where id = :name';
-        return $this->db->fetchAssoc($query, array('name' => (int)$id)) ?: null;
+        $query = <<<EOT
+select u.id, u.url, u.created, count(v.shorty_url_id) as clicks
+from shorty_url u
+left join shorty_url_visit v on v.shorty_url_id = :id
+where u.id = :id
+group by u.id
+EOT;
+
+        $result = $this->db->fetchAssoc($query, array('id' => (int)$id));
+
+        return true === empty($result) ? null : new ShortyUrl($result);
     }
 
     /**
@@ -117,13 +126,13 @@ EOT
      * @param int    $id
      * @param string $userAgent
      *
-     * @return int the number of rows affected
+     * @return ShortyUrl the URL clicked.
      */
     public function registerClick($id, $userAgent)
     {
         $now = new \DateTime();
 
-        return $this->db->insert(
+        $this->db->insert(
             'shorty_url_visit',
             array(
                 'shorty_url_id' => $id,
@@ -131,6 +140,8 @@ EOT
                 'created'       => $now->format('Y-m-d H:i:s'),
             )
         );
+
+        return $this->find($id);
     }
 
     /**

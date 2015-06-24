@@ -18,11 +18,6 @@ deployment:
             - git push git@heroku.com:shorty-prod.git $CIRCLE_SHA1:refs/heads/master
             - heroku maintenance:off --app shorty-prod
 
-            # Push to fortrabbit production
-            - git push git@git8.eu1.frbit.com:shorty.git $CIRCLE_SHA1:refs/heads/master
-            - ssh u-shorty@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod migrations:migrate --no-interaction"
-            - ssh u-shorty@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod assetic:dump"
-
     staging:
         branch: develop
         commands:
@@ -30,8 +25,3 @@ deployment:
             - heroku maintenance:on --app shorty-stage
             - git push git@heroku.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
             - heroku maintenance:off --app shorty-stage
-
-            # Push to fortrabbit stage
-            - git push git@git1.eu1.frbit.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
-            - ssh u-shorty-stage@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod migrations:migrate --no-interaction"
-            - ssh u-shorty-stage@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod assetic:dump"

@@ -1,0 +1,17 @@
+{
+    "name": "shorty",
+    "description": "A URL shortener",
+    "version": "0.0.0",
+    "homepage": "https://github.com/breenie/shorty",
+    "license": "MIT",
+    "private": true,
+    "dependencies": {
+        "angular": "1.3.x",
+        "angular-resource": "1.3.x",
+        "angular-mocks": "1.3.x",
+        "angular-ui-bootstrap-bower": "~0.13.0",
+        "bootstrap-without-jquery": "~0.6.1",
+        "bootstrap": "~3.3.1",
+        "angular-route": "1.3.x"
+    }
+}

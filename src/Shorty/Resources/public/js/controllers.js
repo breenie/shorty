@@ -1,57 +1,50 @@
-function ShortyController($scope, Url) {
+(function(angular) {
+    'use strict';
 
-    var currentResource;
-    var resetForm = function () {
-        $scope.addMode = true;
-        $scope.author = undefined;
-        $scope.message = undefined;
-        $scope.selectedIndex = undefined;
-    }
+    angular.module('shorty')
+        .controller('Urls', Urls);
 
-    $scope.hostname = document.location.host;
-    $scope.urls = Url.query();
-    $scope.addMode = true;
+    Urls.$inject = ['$scope', '$http', '$location', 'Url'];
 
-    $scope.add = function () {
-        var key = {};
-        var value = {author: $scope.author, message: $scope.message}
-
-        Url.save(key, value, function (data) {
-            $scope.urls.push(data);
-            resetForm();
+    function Urls($scope, $http, $location, Url) {
+        $http.get('/api/urls.json').success(function(data) {
+            $scope.urls = data.results;
         });
-    };
 
-    $scope.update = function () {
-        var key = {id: currentResource.id};
-        var value = {author: $scope.author, message: $scope.message}
-        Url.save(key, value, function (data) {
-            currentResource.author = data.author;
-            currentResource.message = data.message;
-            resetForm();
+        //var result = Url.query();
+        //
+        //$scope.urls = result.then(function(result) {
+        //    return result.results;
+        //});
+
+        $scope.hostname = $location.host() + (80 == $location.port() ? '' : ':' + $location.port());
+    }
+})(angular);
+
+var shortyControllers = angular.module('shortyControllers', []);
+
+shortyControllers.controller('ShortyController', ['$scope', '$http', '$location', 'Url',
+    function($scope, $http, $location, Url) {
+        $http.get('/api/urls.json').success(function(data) {
+            $scope.urls = data.results;
         });
-    }
 
-    $scope.refresh = function () {
-        $scope.urls = Url.query();
-        resetForm();
-    };
+        //var result = Url.query();
+        //
+        //$scope.urls = result.then(function(result) {
+        //    return result.results;
+        //});
 
-    $scope.deleteMessage = function (index, id) {
-        Url.delete({id: id}, function () {
-            $scope.urls.splice(index, 1);
-            resetForm();
+        $scope.hostname = $location.host() + (80 == $location.port() ? '' : ':' + $location.port());
+    }]);
+
+
+shortyControllers.controller('ShortyDetailsController', ['$scope', '$routeParams', '$location', 'Url',
+    function($scope, $routeParams, $location, Url) {
+
+        Url.get({id: $routeParams.id}, function (data) {
+            $scope.details = data;
         });
-    };
 
-    $scope.selectMessage = function (index) {
-        currentResource = $scope.urls[index];
-        $scope.addMode = false;
-        $scope.author = currentResource.author;
-        $scope.message = currentResource.message;
-    }
-
-    $scope.cancel = function () {
-        resetForm();
-    }
-}
+        $scope.hostname = $location.host() + (80 == $location.port() ? '' : ':' + $location.port());
+    }]);

@@ -1,7 +1,15 @@
 <IfModule mod_rewrite.c>
     Options -MultiViews
 
-    RewriteEngine On
+#    RewriteEngine On
+#    RewriteCond %{REQUEST_FILENAME} !-f
+#    RewriteRule ^ index.php [QSA,L]
+
+    RewriteEngine on
+    RewriteBase /
+    RewriteRule ^app index.html [NE,L]
+    RewriteRule ^api index.php [NE,L]
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [QSA,L]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*) /index.php [NE,L]
 </IfModule>

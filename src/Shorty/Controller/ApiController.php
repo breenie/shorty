@@ -8,12 +8,12 @@
 
 namespace Shorty\Controller;
 
-use PDO;
 use Shorty\Service\UrlShortener;
 use Silex\Application;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApiController
 {
@@ -41,9 +41,7 @@ class ApiController
      */
     public function getLinksAction(Request $request)
     {
-        /** @var UrlShortener $service */
-        $service = $this->app['kurl.service.url_shortener'];
-        $results = $service->paginate(
+        $results = $this->getService()->paginate(
             (int)$request->get('offset') ?: 0,
             (int)$request->get('limit') ?: 10,
             0 === strcasecmp('asc', $request->get('direction')) ? SORT_ASC : SORT_DESC
@@ -57,53 +55,78 @@ class ApiController
      *
      * @param string $id
      *
+     * TODO add 404 for not found links
+     *
      * @return JsonResponse
      */
     public function getLinkAction($id)
     {
-        /** @var \Doctrine\DBAL\Connection $db */
-        $db = $this->app['db'];
-
-        $statement = $db->prepare(
-            <<<EOT
-select u.id, u.url, u.created, count(v.shorty_url_id) as clicks
-from shorty_url u
-left join shorty_url_visit v on v.shorty_url_id = u.id
-where u.id = :id
-EOT
-        );
-
-        $statement->bindValue('id', $this->app['kurl.base62']->decode($id));
-        $statement->execute();
-
-        return new JsonResponse($this->formatResult($statement->fetch(PDO::FETCH_ASSOC)));
-    }
-
-    private function shortLink($id, $route)
-    {
-        return $this->app['url_generator']->generate(
-            $route,
-            ['id' => $this->app['kurl.base62']->encode($id)],
-            UrlGeneratorInterface::ABSOLUTE_URL
-        );
-
+        return new JsonResponse($this->getService()->find($this->app['kurl.base62']->decode($id)));
     }
 
     /**
-     * Formats a result.
+     * Adds a click to the short link and returns the short URL.
      *
-     * @param array $link
+     * @param Request $request
+     * @param int     $id
      *
-     * @return mixed
+     * @return JsonResponse
      */
-    private function formatResult($link)
+    public function patchLinkClicksAction(Request $request, $id)
     {
-        if (null !== $link) {
-            $link['details_link'] = $this->shortLink($link['id'], 'kurl_shorty_details');
-            $link['short_link']   = $this->shortLink($link['id'], 'kurl_shorty_redirect');
-            $link['clicks']       = (int)$link['clicks']; // TODO This will cause issues when counts get huge, they are unlikely to.
+        return new JsonResponse(
+            $this->getService()->registerClick(
+                $this->app['kurl.base62']->decode($id),
+                $request->headers->get('User-Agent')
+            )
+        );
+    }
+
+    /**
+     * Creates a new short URL.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function postLinkAction(Request $request)
+    {
+        $response = new JsonResponse();
+
+        /** @var Form $form */
+        $form = $this->app['shorty.form.create_url'];
+        $form->handleRequest($request);
+
+        if (true === $form->isValid()) {
+            $data = $form->getData();
+
+            $created = $this->getService()->create($data['url']);
+
+            $readable = $created->jsonSerialize();
+
+            $response->setStatusCode(Response::HTTP_CREATED);
+            $response->setData($created);
+            $response->headers->set(
+                'Location',
+                $this->app['url_generator']->generate('kurl_shorty_details', ['id' => $readable['id']]),
+                true
+            );
+        } else {
+            $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+            $response->setData($form->getErrors());
         }
 
-        return $link;
+        return $response;
+    }
+
+    /**
+     * Gets the URL shortener service.
+     *
+     * @return UrlShortener
+     */
+    private function getService()
+    {
+        return $this->app['kurl.service.url_shortener'];
     }
 }

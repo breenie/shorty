@@ -13,6 +13,11 @@
     syntaxCheck                 = "false"
     bootstrap                   = "vendor/autoload.php">
 
+    <php>
+        <env name="SYMFONY_ENV" value="test"/>
+        <env name="DEBUG" value="true"/>
+    </php>
+
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>./tests</directory>

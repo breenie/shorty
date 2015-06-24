@@ -1,8 +1,8 @@
 <?php
 /**
- * - ShortUrlServiceProvider.php
+ * Provides the Shorty controllers and services.
  *
- * @author chris
+ * @author  chris
  * @created 02/02/15 10:50
  */
 
@@ -14,11 +14,14 @@ use Shorty\Controller\DefaultController;
 use Shorty\Service\UrlShortener;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ShortyServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * Registers services on the given app.
      *
@@ -29,7 +32,30 @@ class ShortyServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        //$app['twig.loader']->addLoader(new \Twig_Loader_Filesystem(__DIR__ . '/../Resources/views'));
+        $app['kurl.base62'] = $app->share(
+            function () {
+                return new Base62();
+            }
+        );
+
+        $app['kurl.service.url_shortener'] = $app->share(
+            function ($app) {
+                return new UrlShortener($app['db']);
+            }
+        );
+
+        $app['shorty.form.create_url'] = $app->share(
+            function(Application $app) {
+                return $app['form.factory']->createBuilder('form', null, ['csrf_protection' => false])
+                    ->setMethod('POST')
+                    ->add(
+                        'url',
+                        'url',
+                        ['required' => true, 'constraints' => [new Assert\NotBlank(), new Assert\Url()]]
+                    )
+                    ->getForm();
+            }
+        );
     }
 
     /**
@@ -43,19 +69,6 @@ class ShortyServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-        $app['kurl.base62'] = $app->share(function() { return new Base62(); });
-
-        $app['shorty.url_generator'] = $app->share(function($app) {
-            return function ($id) use ($app) {
-                return $app['url_generator']->generate(
-                    'kurl_shorty_redirect',
-                    ['id' => $app['kurl.base62']->encode($id)],
-                    UrlGeneratorInterface::ABSOLUTE_URL
-                );
-            };
-        });
-
-        $app['kurl.service.url_shortener'] = new UrlShortener($app['db'], $app['shorty.url_generator']);
         $app['app.default_controller'] = $app->share(
             function () use ($app) {
                 return new DefaultController($app);
@@ -68,13 +81,46 @@ class ShortyServiceProvider implements ServiceProviderInterface
             }
         );
 
+        // TODO rename these routes.
         $app->get('/', 'app.default_controller:indexAction')->bind('kurl_shorty');
         $app->get('/statistics', 'app.default_controller:statisticsAction')->bind('kurl_shorty_statistics');
-        $app->post('/', 'app.default_controller:indexAction')->bind('kurl_shorty_create');
+        //$app->post('/', 'app.default_controller:indexAction')->bind('kurl_shorty_create');
         $app->get('/{id}', 'app.default_controller:redirectAction')->bind('kurl_shorty_redirect');
         $app->get('/{id}/details', 'app.default_controller:detailsAction')->bind('kurl_shorty_details');
 
         $app->get('/api/urls.json', 'app.api_controller:getLinksAction')->bind('kurl_shorty_api_urls');
-        $app->get('/api/urls/{id}', 'app.api_controller:getLinkAction')->bind('kurl_shorty_api_url');
+        $app->get('/api/urls/{id}.json', 'app.api_controller:getLinkAction')->bind('kurl_shorty_api_url');
+        $app->post('/api/urls.json', 'app.api_controller:postLinkAction')->bind('kurl_shorty_api_post');
+        $app->patch('/api/urls/{id}/clicks.json', 'app.api_controller:patchLinkClicksAction')->bind(
+            'kurl_shorty_api_patch_clicks'
+        );
+
+        $app->before(
+            function (Request $request) {
+                if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+                    $data = json_decode($request->getContent(), true);
+
+                    if (JSON_ERROR_NONE === json_last_error()) {
+                        $request->request->replace(is_array($data) ? $data : array());
+                    } else {
+                        throw new HttpException(
+                            Response::HTTP_BAD_REQUEST,
+                            sprintf('Could not decode JSON body. %1$s', json_last_error_msg())
+                        );
+                    }
+                }
+            }
+        );
+
+        /** @noinspection PhpUnusedParameterInspection */
+        $app->after(
+            function (Request $request, Response $response, Application $app) {
+
+                // Other tests for request method are handled downstream so just set the length whatever.
+                if (true === $response instanceof JsonResponse) {
+                    $response->headers->set('Content-Length', strlen($response->getContent()), true);
+                }
+            }
+        );
     }
 }
