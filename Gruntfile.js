@@ -80,6 +80,7 @@ module.exports = function (grunt) {
         dest: '<%= shorty.dist %>/css/<%= pkg.name %>.css'
       }
     },
+    
     jasmine: {
       customTemplate: {
         src: [
