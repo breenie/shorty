@@ -30,6 +30,7 @@
     "phantomjs": "^1.9.17"
   },
   "scripts": {
-    "postinstall": "bower install"
+    "postinstall": "bower install",
+    "start": "grunt build"
   }
 }
