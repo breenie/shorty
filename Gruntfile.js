@@ -240,6 +240,23 @@ module.exports = function (grunt) {
       }
     },
 
+    htmlmin: {
+      dist: {
+        options: {
+          collapseWhitespace: true,
+          conservativeCollapse: true,
+          collapseBooleanAttributes: true,
+          removeCommentsFromCDATA: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= shorty.dist %>',
+          src: ['*.html'],
+          dest: '<%= shorty.dist %>'
+        }]
+      }
+    },
+
     karma: {
       unit: {
         configFile: 'tests/karma.conf.js',
