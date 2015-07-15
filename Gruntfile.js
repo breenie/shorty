@@ -98,12 +98,14 @@ module.exports = function (grunt) {
         }
       }
     },
+
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
         screwIE8: true
       }
     },
+    
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
