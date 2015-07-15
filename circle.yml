@@ -14,8 +14,10 @@ dependencies:
 
 test:
     override:
-        - php bin/phpunit --coverage-text
+        - mkdir -p $CIRCLE_TEST_REPORTS/junit
+        - php bin/phpunit --coverage-text --log-junit $CIRCLE_TEST_REPORTS/junit/junit.xml
         - grunt test
+        
 deployment:
     production:
         branch: master
