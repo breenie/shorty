@@ -100,9 +100,20 @@ class ShortyServiceProvider implements ServiceProviderInterface
                     if (JSON_ERROR_NONE === json_last_error()) {
                         $request->request->replace(is_array($data) ? $data : array());
                     } else {
+                        // TODO Remove quick hack to capture missing json_last_error_msg
+                        $errors = array(
+                            JSON_ERROR_NONE             => null,
+                            JSON_ERROR_DEPTH            => 'Maximum stack depth exceeded',
+                            JSON_ERROR_STATE_MISMATCH   => 'Underflow or the modes mismatch',
+                            JSON_ERROR_CTRL_CHAR        => 'Unexpected control character found',
+                            JSON_ERROR_SYNTAX           => 'Syntax error, malformed JSON',
+                            JSON_ERROR_UTF8             => 'Malformed UTF-8 characters, possibly incorrectly encoded'
+                        );
+                        $error = json_last_error();
+                        $message = array_key_exists($error, $errors) ? $errors[$error] : "Unknown error ({$error})";
                         throw new HttpException(
                             Response::HTTP_BAD_REQUEST,
-                            sprintf('Could not decode JSON body. %1$s', json_last_error_msg())
+                            sprintf('Could not decode JSON body. %1$s', $message)
                         );
                     }
                 }
