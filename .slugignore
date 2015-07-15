@@ -1,0 +1,5 @@
+app
+build
+bower_components
+node_modules
+tests

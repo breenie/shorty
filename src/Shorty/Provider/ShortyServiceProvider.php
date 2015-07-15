@@ -82,11 +82,8 @@ class ShortyServiceProvider implements ServiceProviderInterface
         );
 
         // TODO rename these routes.
-        $app->get('/', 'app.default_controller:indexAction')->bind('kurl_shorty');
-        $app->get('/statistics', 'app.default_controller:statisticsAction')->bind('kurl_shorty_statistics');
-        //$app->post('/', 'app.default_controller:indexAction')->bind('kurl_shorty_create');
+//        $app->get('/', 'app.default_controller:indexAction')->bind('kurl_shorty');
         $app->get('/{id}', 'app.default_controller:redirectAction')->bind('kurl_shorty_redirect');
-        $app->get('/{id}/details', 'app.default_controller:detailsAction')->bind('kurl_shorty_details');
 
         $app->get('/api/urls.json', 'app.api_controller:getLinksAction')->bind('kurl_shorty_api_urls');
         $app->get('/api/urls/{id}.json', 'app.api_controller:getLinkAction')->bind('kurl_shorty_api_url');

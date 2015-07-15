@@ -62,15 +62,15 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
 
 $app->register(new \Shorty\Provider\ShortyServiceProvider());
 $app->register(new \Kurl\Silex\Provider\ErrorTemplateProvider());
-$app->register(new \Kurl\Silex\Auth\Provider\AuthServiceProvider());
+//$app->register(new \Kurl\Silex\Auth\Provider\AuthServiceProvider());
 
 if (true === $app['debug']) {
-    $app->register(
-        new Kurl\Silex\Provider\WebProfilerServiceProvider(),
-        array(
-            'profiler.cache_dir' => __DIR__ . '/../var/cache/profiler',
-        )
-    );
+//    $app->register(
+//        new Kurl\Silex\Provider\WebProfilerServiceProvider(),
+//        array(
+//            'profiler.cache_dir' => __DIR__ . '/../var/cache/profiler',
+//        )
+//    );
 }
 
 return $app;

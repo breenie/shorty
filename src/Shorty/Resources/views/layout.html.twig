@@ -1,4 +1,3 @@
-{% import 'macros.html.twig' as kurl %}
 <!DOCTYPE html>
 <html lang="en-gb" ng-app="shortyApp">
 <head>
@@ -20,34 +19,16 @@
 
 {% block nav_content %}{% include 'menu.html.twig' %}{% endblock %}
 
-{% block flash_messages %}
-    <div class="container">
-
-        <div flash-alert active-class="in" class="alert fade" role="alert">
-            <strong class="alert-heading">{% verbatim %}{{ flash.type }}{% endverbatim %}</strong>:
-            <span class="alert-message">{% verbatim %}{{ flash.message }}{% endverbatim %}</span>
-        </div>
-
-        {#<div ng-show="flash" class="alert alert-{{ flash.severity }} alert-dismissible" role="alert">#}
-            {#<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>#}
-            {#<strong>{{ flash.severity|capitalize }}:</strong>#}
-            {#{{ flash.message }}#}
-        {#</div>#}
-        {# kurl.render_flashbags(app.session.flashbag.all) #}
-    </div>
-{% endblock %}
-
 <div ng-view></div>
 
 {% block body_content %}{% endblock %}
 
-{% block footer_content %}
-    <footer class="footer">
-        <div class="container">
-            {% include 'footer.html.twig' %}
-        </div>
-    </footer>
-{% endblock %}
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">Another vanity project by <a href="http://www.kurl.co.uk/">kurl
+                ltd</a> {{ "now"|date("Y") }}</p>
+    </div>
+</footer>
 
 </body>
 </html>

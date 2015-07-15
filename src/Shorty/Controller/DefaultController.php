@@ -33,22 +33,6 @@ class DefaultController
     }
 
     /**
-     * A default action.
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        return new Response(
-            $this->app['twig']->render(
-                'default/index.html.twig',
-                ['form' => $this->app['shorty.form.create_url']->createView()]
-            ),
-            200
-        );
-    }
-
-    /**
      * Redirects a user to the long URL.
      *
      * @param Request $request
@@ -74,27 +58,5 @@ class DefaultController
         $shortened = json_decode($response->getContent(), true);
 
         return $this->app->redirect($shortened['url']);
-    }
-
-    /**
-     * Renders link details.
-     *
-     * @param $id
-     *
-     * @return Response
-     */
-    public function detailsAction($id)
-    {
-        return new Response($this->app['twig']->render('default/details.html.twig', ['id' => $id]), 200);
-    }
-
-    /**
-     * Renders the stats page.
-     *
-     * @return Response
-     */
-    public function statisticsAction()
-    {
-        return new Response($this->app['twig']->render('default/statistics.html.twig'), 200);
     }
 }

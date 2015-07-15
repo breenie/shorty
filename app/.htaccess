@@ -7,7 +7,7 @@
 
     RewriteEngine on
     RewriteBase /
-    RewriteRule ^app index.html [NE,L]
+    RewriteRule ^$ index.html [NE,L]
     RewriteRule ^api index.php [NE,L]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

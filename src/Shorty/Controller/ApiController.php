@@ -109,7 +109,7 @@ class ApiController
             $response->setData($created);
             $response->headers->set(
                 'Location',
-                $this->app['url_generator']->generate('kurl_shorty_details', ['id' => $readable['id']]),
+                $this->app['url_generator']->generate('kurl_shorty_redirect', ['id' => $readable['id']]),
                 true
             );
         } else {

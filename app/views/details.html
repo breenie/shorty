@@ -1,5 +1,3 @@
-
-
 <div class="container">
     <section>
         <div class="page-header">
@@ -10,11 +8,11 @@
             <tbody>
             <tr>
                 <th>Short</th>
-                <td><a ng-href="/{{ details.url }}">{{ hostname}}/{{ details.id }}</a></td>
+                <td><a ng-href="http://{{ hostname }}/{{ details.id }}">{{ hostname}}/{{ details.id }}</a></td>
             </tr>
             <tr>
                 <th>Long</th>
-                <td><a ng-href="/{{ details.id }}">{{ details.url }}</a></td>
+                <td><a ng-href="http://{{ hostname }}/{{ details.id }}">{{ details.url }}</a></td>
             </tr>
             <tr>
                 <th>Created</th>
@@ -26,6 +24,5 @@
             </tr>
             </tbody>
         </table>
-
     </section>
 </div>
