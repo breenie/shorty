@@ -54,8 +54,7 @@
         "post-install-cmd": [],
         "post-update-cmd": [],
         "compile": [
-            "bin/console migrations:migrate --no-interaction",
-            "grunt build"
+            "bin/console migrations:migrate --no-interaction"
         ]
     },
     "bin": [

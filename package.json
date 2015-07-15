@@ -31,7 +31,6 @@
     "grunt-usemin": "^3.0.0"
   },
   "scripts": {
-    "postinstall": "./node_modules/.bin/bower install",
-    "start": "grunt build"
+    "postinstall": "./node_modules/.bin/bower install && grunt build"
   }
 }
