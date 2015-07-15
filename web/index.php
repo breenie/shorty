@@ -3,7 +3,7 @@
  * The production web bootstrap.
  */
 namespace {
-    ini_set('display_errors', 0);
+    //ini_set('display_errors', 0);
 
     if ('cli-server' === php_sapi_name() &&
         true === is_file(__DIR__ . preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']))
@@ -14,7 +14,6 @@ namespace {
     require_once __DIR__ . '/../vendor/autoload.php';
 
     $app = require_once __DIR__ . '/../src/app.php';
-    require_once __DIR__ . '/../config/prod.php';
 
     $app->run();
 }

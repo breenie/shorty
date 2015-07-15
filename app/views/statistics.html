@@ -1,0 +1,53 @@
+<div class="container">
+    <section>
+        <div class="page-header">
+            <h1>Boring statistics</h1>
+
+            <p class="lead">Recently created shorty links</p>
+        </div>
+
+        <!--<div ng-controller="TodoController">-->
+        <!--<h1>Todos</h1>-->
+        <!--<h4>{{todos.length}} total</h4>-->
+        <!--<ul>-->
+            <!--<li ng-repeat="todo in filteredTodos">{{todo.text}}</li>-->
+        <!--</ul>-->
+        <!--<pagination-->
+                <!--ng-model="currentPage"-->
+                <!--total-items="todos.length"-->
+                <!--max-size="maxSize"-->
+                <!--boundary-links="true">-->
+        <!--</pagination>-->
+        <!--</div>-->
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Short link</th>
+                <th>Points to</th>
+                <th>Date created</th>
+                <th>Clicks</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="url in urls">
+
+                <td><a ng-href="/{{ url.id }}">{{ hostname }}/{{ url.id }}</a></td>
+                <td><a ng-href="{{ url.url }}">{{ url.url }}</a></td>
+                <td>{{ url.created | date:'MM/dd/yyyy @ h:mma' }}</td>
+                <td><a ng-href="#/{{ url.id }}/details">{{ url.clicks | number }}</a></td>
+
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <pagination direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"></pagination>
+        </div>
+
+        <!--<p>-->
+            <!--Total items: {{totalItems}}<br />-->
+            <!--Items per page: {{itemsPerPage}}<br />-->
+            <!--Current Page: {{currentPage}}-->
+        <!--</p>-->
+    </section>
+</div>

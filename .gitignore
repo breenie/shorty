@@ -1,8 +1,10 @@
-!bin/console
-bin
-web/components
-vendor
-build
-web/css
-web/js
 .env
+.tmp
+!bin/console
+bower_components
+bin
+build
+node_modules
+vendor
+web/*
+!web/index.php
