@@ -34,8 +34,8 @@ deployment:
             - heroku maintenance:on --app shorty-stage
             - git push git@heroku.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
             - heroku maintenance:off --app shorty-stage
-            
+
     dokku_deploy_test:
         branch: dokku-circleci
         commands:
-            - git push dokku@apps.kurl.io:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
+            - git push dokku@apps.kurl.io:shorty-stage $CIRCLE_SHA1:refs/heads/master
