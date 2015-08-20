@@ -14,8 +14,6 @@ namespace {
     /** @var Silex\Application $app */
     $app = require __DIR__ . '/../src/app.php';
 
-    require __DIR__ . '/../config/' . $env . '.php';
-
     /** @var Symfony\Component\Console\Application $console */
     $console = require __DIR__ . '/../src/console.php';
     $app->boot();

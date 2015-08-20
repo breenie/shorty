@@ -1,33 +1,30 @@
 ---
 
+machine:
+    timezone: Europe/London
+    php:
+        version: 5.4.4 # Seems to be the lowest version in circleci.
+    node:
+        version: 0.12.0
 dependencies:
     override:
         # Stop the circleci composer install getting confused by download type "vcs"
         - composer install --prefer-dist --no-interaction
+        - npm install
+
+test:
+    override:
+        - mkdir -p $CIRCLE_TEST_REPORTS/junit
+        - php bin/phpunit --coverage-text --log-junit $CIRCLE_TEST_REPORTS/junit/junit.xml
+        - grunt test
 
 deployment:
     production:
         branch: master
         commands:
-            # Push to heroku production
-            - heroku maintenance:on --app shorty-prod
-            - git push git@heroku.com:shorty-prod.git $CIRCLE_SHA1:refs/heads/master
-            - heroku maintenance:off --app shorty-prod
-
-            # Push to fortrabbit production
-            - git push git@git8.eu1.frbit.com:shorty.git $CIRCLE_SHA1:refs/heads/master
-            - ssh u-shorty@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod migrations:migrate --no-interaction"
-            - ssh u-shorty@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod assetic:dump"
+            - git push dokku@apps.kurl.io:shorty $CIRCLE_SHA1:refs/heads/master
 
     staging:
         branch: develop
         commands:
-            # Push to heroku stage
-            - heroku maintenance:on --app shorty-stage
-            - git push git@heroku.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
-            - heroku maintenance:off --app shorty-stage
-
-            # Push to fortrabbit stage
-            - git push git@git1.eu1.frbit.com:shorty-stage.git $CIRCLE_SHA1:refs/heads/master
-            - ssh u-shorty-stage@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod migrations:migrate --no-interaction"
-            - ssh u-shorty-stage@ssh37.eu1.frbit.com ". /etc/profile.envvars && php htdocs/bin/console --env=prod assetic:dump"
+            - git push dokku@apps.kurl.io:shorty-stage $CIRCLE_SHA1:refs/heads/master

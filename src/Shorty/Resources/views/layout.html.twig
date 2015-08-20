@@ -1,56 +1,34 @@
-{% import 'macros.html.twig' as kurl %}
 <!DOCTYPE html>
-<html lang="en-gb" ng-app="ShortyService">
+<html lang="en-gb" ng-app="shortyApp">
 <head>
+    <base href="/" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
-    <!-- Enable responsiveness on mobile devices-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+
     <title>{% block title %}Shorty - Yes, we need another URL shortener{% endblock %}</title>
 
-    {# TODO consider using the real CDNs for vendor libs #}
-    {#<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" />#}
-    {#<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>#}
-    {#<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>#}
-
-    {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>#}
-    {% stylesheets '@bootstrap_css' '@krl_css' filter='?cssmin' %}
-    <link href="{{ app.asset_path }}/{{ asset_url }}" type="text/css" rel="stylesheet" media="screen"/>
-    {% endstylesheets %}
-
     <link rel="shortcut icon" href="{{ app.request.basePath }}/favicon.ico" />
-
-    {% javascripts '@angular' filter='?jsmin' %}
-    <script src="{{ app.asset_path }}/{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <link rel="stylesheet" href="/css/shorty.css">
+    <script src="/js/shorty.js"></script>
 
     {% block head %}{% endblock %}
+
 </head>
-<body{% block body_attributes %}{% endblock %} ng-controller="ShortyController">
+<body{% block body_attributes %}{% endblock %}>
 
 {% block nav_content %}{% include 'menu.html.twig' %}{% endblock %}
 
-{% block flash_messages %}
-    <div class="container">
-        {{ kurl.render_flashbags(app.session.flashbag.all) }}
-    </div>
-{% endblock %}
+<div ng-view></div>
 
 {% block body_content %}{% endblock %}
 
-{% block footer_content %}
-    <footer class="footer">
-        <div class="container">
-            {% include 'footer.html.twig' %}
-        </div>
-    </footer>
-{% endblock %}
-
-{##}
-{% javascripts '@bootstrap_js' '@krl_js' filter='?jsmin' %}
-<script src="{{ app.asset_path }}/{{ asset_url }}"></script>
-{% endjavascripts %}
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">Another vanity project by <a href="http://www.kurl.co.uk/">kurl
+                ltd</a> {{ "now"|date("Y") }}</p>
+    </div>
+</footer>
 
 </body>
 </html>

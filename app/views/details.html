@@ -1,0 +1,28 @@
+<div class="container">
+    <section>
+        <div class="page-header">
+            <h1>Details for short link <a ng-href="/{{ details.id }}">{{ details.id }}</a></h1>
+        </div>
+
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <th>Short</th>
+                <td><a ng-href="http://{{ hostname }}/{{ details.id }}">{{ hostname}}/{{ details.id }}</a></td>
+            </tr>
+            <tr>
+                <th>Long</th>
+                <td><a ng-href="http://{{ hostname }}/{{ details.id }}">{{ details.url }}</a></td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ details.created | date: "yyyy/MM/dd HH:mm:ss" }}</td>
+            </tr>
+            <tr>
+                <th>Clicks</th>
+                <td>{{ details.clicks | number }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
