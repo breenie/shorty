@@ -29,6 +29,7 @@ module.exports = function(config) {
       'bower_components/angular-flash/dist/angular-flash.js',
       'bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js',
       'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/tagged-infinite-scroll/taggedInfiniteScroll.min.js',
       // endbower
       'app/scripts/**/*.js',
       'tests/spec/**/*.js'

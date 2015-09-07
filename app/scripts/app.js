@@ -8,6 +8,7 @@
       'ngResource',
       'angular-flash.service',
       'angular-flash.flash-alert-directive',
+      'tagged.directives.infiniteScroll',
       'shortyApp.services'
     ]
   );
