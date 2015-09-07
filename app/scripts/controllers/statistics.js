@@ -15,10 +15,11 @@
 
     $scope.getMore = function () {
 
-      $scope.fetching = true;
+      var offset = $scope.offset;
       $scope.offset += $scope.limit;
+      $scope.fetching = true;
 
-      $http.get('/api/urls.json', {params: {limit: $scope.limit, offset: $scope.offset}}).then(function (response) {
+      $http.get('/api/urls.json', {params: {limit: $scope.limit, offset: offset}}).then(function (response) {
         $scope.fetching = false;
 
         //if (response.data.length) {
