@@ -74,6 +74,9 @@ module.exports = function (grunt) {
         dest: '<%= shorty.dist %>/js/<%= pkg.name %>.js'
       },
       css: {
+        options: {
+          separator: '\n'
+        },
         src: [
           'bower_components/bootstrap/dist/css/bootstrap.min.css',
           '<%= shorty.app %>/styles/shorty.css'
