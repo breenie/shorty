@@ -47,13 +47,12 @@ $app->register(new TwigServiceProvider());
 
 $app['twig.path']       = array(
     __DIR__ . '/../src/Shorty/Resources/views',
-    __DIR__ . '/../src/Kurl/Silex/Auth/Resources/views',
 );
 
 $app['twig.options'] = array('cache' => __DIR__ . '/../var/cache/twig');
 
 $app->register(new FormServiceProvider());
-$app->register(new Silex\Provider\SessionServiceProvider());
+// $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new MonologServiceProvider());
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array('db.options' => $app['db.options']));
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
@@ -62,15 +61,5 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
 
 $app->register(new \Shorty\Provider\ShortyServiceProvider());
 $app->register(new \Kurl\Silex\Provider\ErrorTemplateProvider());
-//$app->register(new \Kurl\Silex\Auth\Provider\AuthServiceProvider());
-
-if (true === $app['debug']) {
-//    $app->register(
-//        new Kurl\Silex\Provider\WebProfilerServiceProvider(),
-//        array(
-//            'profiler.cache_dir' => __DIR__ . '/../var/cache/profiler',
-//        )
-//    );
-}
 
 return $app;

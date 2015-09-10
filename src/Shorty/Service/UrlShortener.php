@@ -74,7 +74,7 @@ EOT;
 
         $result = $this->db->fetchAssoc($query, array('id' => (int)$id));
 
-        return true === empty($result) ? null : new ShortyUrl($result);
+        return true === empty($result) ? null : $this->hydrate($result);
     }
 
     /**

@@ -69,6 +69,46 @@ class ShortyUrl implements \JsonSerializable
     }
 
     /**
+     * Gets the shorty URL id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Gets the long Url.
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Gets the total number of clicks.
+     *
+     * @return int
+     */
+    public function getClicks()
+    {
+        return $this->clicks;
+    }
+
+    /**
+     * Gets the created timestamp.
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
      * (PHP 5 &gt;= 5.4.0)<br/>
      * Specify data which should be serialized to JSON
      *
@@ -76,7 +116,7 @@ class ShortyUrl implements \JsonSerializable
      * @return mixed data which can be serialized by <b>json_encode</b>,
      *       which is a value of any type other than a resource.
      */
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return [
             'id'      => $this->encoder->encode($this->id), // Reusing "id" may seem confusing but the int Id should not be exposed really so it's all good.

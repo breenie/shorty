@@ -19,11 +19,24 @@ class ApiControllerTest extends WebTestCase
      *
      * @var array
      */
-    private $expected = [
-        'id' => 1,
-        'url' => 'https://example.com/',
+    private $input = [
+        'id'      => 1,
+        'url'     => 'https://example.com/',
         'created' => '2015-05-16T11:25:49+00:00',
-        'clicks' => 123456789,
+        'clicks'  => 123456789,
+    ];
+
+    /**
+     * The expected response.
+     *
+     * @var array
+     */
+    private $expected = [
+        'hash'      => 1,
+        'long_url'  => 'https://example.com/',
+        'short_url' => 'http://localhost/1',
+        'created'   => '2015-05-16T11:25:49+00:00',
+        'clicks'    => 123456789,
     ];
 
     /**
@@ -37,7 +50,7 @@ class ApiControllerTest extends WebTestCase
         $this->app['kurl.service.url_shortener']
             ->expects($this->once())
             ->method('find')
-            ->will($this->returnValue(new ShortyUrl($this->expected)));
+            ->will($this->returnValue(new ShortyUrl($this->input)));
 
         $client  = $this->createClient();
         $client->request('GET', '/api/urls/1.json');
@@ -92,6 +105,14 @@ class ApiControllerTest extends WebTestCase
         $this->assertArrayHasKey('request', $decoded);
         $this->assertEquals(527, $decoded['total']);
         $this->assertEquals(10, count($decoded['results']));
+
+        foreach ($decoded['results'] as $url) {
+            $this->assertArrayHasKey('hash', $url);
+            $this->assertArrayHasKey('long_url', $url);
+            $this->assertArrayHasKey('short_url', $url);
+            $this->assertArrayHasKey('clicks', $url);
+            $this->assertArrayHasKey('created', $url);
+        }
     }
 
     /**
@@ -105,7 +126,7 @@ class ApiControllerTest extends WebTestCase
         $this->app['kurl.service.url_shortener']
             ->expects($this->once())
             ->method('create')
-            ->will($this->returnValue(new ShortyUrl($this->expected)));
+            ->will($this->returnValue(new ShortyUrl($this->input)));
 
         $client  = $this->createClient();
         $client->request(
@@ -114,7 +135,7 @@ class ApiControllerTest extends WebTestCase
             [],
             [],
             ['CONTENT_TYPE' => 'application/json', 'HTTP_ACCEPT' => 'application/json'],
-            json_encode(['form' => ['url' => $this->expected['url']]])
+            json_encode(['form' => ['url' => $this->input['url']]])
         );
 
         $response = $client->getResponse();

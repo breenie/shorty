@@ -34,7 +34,6 @@
             </button>
             <div class="navbar-brand">
                 <a href="#/">Shorty</a>
-                <small>Yes, we need another URL shortener</small>
             </div>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
@@ -46,7 +45,7 @@
 </nav>
 
 
-<div class="container">
+<div class="container flash">
 
     <div flash-alert active-class="in" class="alert fade" role="alert">
         <strong class="alert-heading">{{ flash.type | capitalise }}</strong>:
@@ -55,7 +54,7 @@
 
 </div>
 
-<div class="container" ng-view></div>
+<div ng-view></div>
 
 <footer class="footer">
     <div class="container">

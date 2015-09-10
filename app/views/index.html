@@ -1,25 +1,27 @@
 <section>
-    <div class="page-header">
-        <h1>Shorten really long URLs</h1>
-    </div>
-    <p name="lead">Shorten massive long URLs in a similar fashion to the zillion other URL shortening
-        services out there.</p>
+    <div class="container hero-unit">
+        <div class="page-header">
+            <h1>Shorten really long URLs</h1>
+        </div>
+        <p name="lead">Shorten massive long URLs in a similar fashion to the zillion other URL shortening
+            services out there.</p>
 
-    <form novalidate role="form" ng-submit="createUrl()">
-        <div class="row">
-            <div class="col-lg-12">
-                <label class="sr-only" for="url">Url</label>
+        <form novalidate role="form" ng-submit="createUrl()">
+            <div class="row">
+                <div class="col-lg-12">
+                    <label class="sr-only" for="url">Url</label>
 
-                <div class="input-group">
-                    <input type="url" id="url" name="url" required="required"
-                           ng-model="formData.url"
-                           class="form-control input-lg" placeholder="Enter really long URL" autocomplete="off" />
+                    <div class="input-group">
+                        <input type="url" id="url" name="url" required="required"
+                               ng-model="formData.url"
+                               class="form-control input-lg" placeholder="Enter really long URL" autocomplete="off" />
                             <span class="input-group-btn">
                                 <button class="btn btn-primary btn-lg" type="submit">Shorten</button>
                             </span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
 
+    </div>
 </section>

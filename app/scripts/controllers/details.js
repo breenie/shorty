@@ -4,16 +4,14 @@
 (function(angular) {
     'use strict';
 
-    var DetailsController = function($scope, $routeParams, $location, Url) {
+    var DetailsController = function($scope, $routeParams, Url) {
 
         Url.get({id: $routeParams.id}, function (data) {
             $scope.details = data;
         });
-
-        $scope.hostname = $location.host() + (80 === $location.port() ? '' : ':' + $location.port());
     };
 
     angular.module('shortyApp')
-        .controller('DetailsController', ['$scope', '$routeParams', '$location', 'Url', DetailsController]);
+        .controller('DetailsController', ['$scope', '$routeParams', 'Url', DetailsController]);
 
 })(angular);

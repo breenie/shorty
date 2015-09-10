@@ -1,29 +1,30 @@
 <section>
-    <div class="page-header">
-        <h1>Boring statistics</h1>
+    <div class="container">
+        <div class="page-header">
+            <h1>Boring statistics</h1>
 
-        <p class="lead">Recently created shorty links</p>
+            <p class="lead">Recently created shorty links</p>
+        </div>
+
+        <table class="url-statistics table table-striped" tagged-infinite-scroll="getMore()">
+            <thead>
+            <tr>
+                <th class="short-url">Short link</th>
+                <th class="long-url">Points to</th>
+                <th class="created">Date created</th>
+                <th class="clicks">Clicks</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="url in items">
+
+                <td class="short-url"><a ng-href="{{ url.short_url }}">{{ url.short_url | stripScheme }}</a></td>
+                <td class="long-url"><a ng-href="{{ url.long_url }}">{{ url.long_url }}</a></td>
+                <td class="created">{{ url.created | date:'yyyy/MM/dd HH:mm:ss' }}</td>
+                <td class="clicks"><a ng-href="#/{{ url.hash }}/details">{{ url.clicks | number }}</a></td>
+
+            </tr>
+            </tbody>
+        </table>
     </div>
-
-    <table class="table table-striped" tagged-infinite-scroll="getMore()">
-        <thead>
-        <tr>
-            <th>Short link</th>
-            <th>Points to</th>
-            <th>Date created</th>
-            <th>Clicks</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="url in items">
-
-            <td><a ng-href="/{{ url.id }}">{{ hostname }}/{{ url.id }}</a></td>
-            <td><a ng-href="{{ url.url }}">{{ url.url }}</a></td>
-            <td>{{ url.created | date:'MM/dd/yyyy @ h:mma' }}</td>
-            <td><a ng-href="#/{{ url.id }}/details">{{ url.clicks | number }}</a></td>
-
-        </tr>
-        </tbody>
-    </table>
-
 </section>
