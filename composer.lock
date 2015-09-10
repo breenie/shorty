@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e9e25387b4035d756039bca3e2733c12",
+    "hash": "50b56765ecb0089db5f332fe053c1766",
     "packages": [
         {
             "name": "doctrine/common",
@@ -470,53 +470,48 @@
         },
         {
             "name": "silex/silex",
-            "version": "v1.3.2",
+            "version": "v1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex.git",
-                "reference": "833d399eeaa449786d3fa2e533ada293b4e533c9"
+                "reference": "13a5c8a595e37e52c9567a51aae157a9f7ac5d26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex/zipball/833d399eeaa449786d3fa2e533ada293b4e533c9",
-                "reference": "833d399eeaa449786d3fa2e533ada293b4e533c9",
+                "url": "https://api.github.com/repos/silexphp/Silex/zipball/13a5c8a595e37e52c9567a51aae157a9f7ac5d26",
+                "reference": "13a5c8a595e37e52c9567a51aae157a9f7ac5d26",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9",
                 "pimple/pimple": "~1.0",
-                "symfony/event-dispatcher": "~2.3,<3.0",
-                "symfony/http-foundation": "~2.3,<3.0",
-                "symfony/http-kernel": "~2.3,<3.0",
-                "symfony/routing": "~2.3,<3.0"
+                "symfony/event-dispatcher": "~2.3|3.0.*",
+                "symfony/http-foundation": "~2.3|3.0.*",
+                "symfony/http-kernel": "~2.3|3.0.*",
+                "symfony/routing": "~2.3|3.0.*"
             },
             "require-dev": {
                 "doctrine/dbal": "~2.2",
-                "monolog/monolog": "~1.4,>=1.4.1",
-                "swiftmailer/swiftmailer": "5.*",
-                "symfony/browser-kit": "~2.3,<3.0",
-                "symfony/config": "~2.3,<3.0",
-                "symfony/css-selector": "~2.3,<3.0",
-                "symfony/debug": "~2.3,<3.0",
-                "symfony/dom-crawler": "~2.3,<3.0",
-                "symfony/finder": "~2.3,<3.0",
-                "symfony/form": "~2.3,<3.0",
-                "symfony/locale": "~2.3,<3.0",
-                "symfony/monolog-bridge": "~2.3,<3.0",
-                "symfony/options-resolver": "~2.3,<3.0",
-                "symfony/process": "~2.3,<3.0",
-                "symfony/security": "~2.3,<3.0",
-                "symfony/serializer": "~2.3,<3.0",
-                "symfony/translation": "~2.3,<3.0",
-                "symfony/twig-bridge": "~2.3,<3.0",
-                "symfony/validator": "~2.3,<3.0",
-                "twig/twig": ">=1.8.0,<2.0-dev"
-            },
-            "suggest": {
-                "symfony/browser-kit": "~2.3",
-                "symfony/css-selector": "~2.3",
-                "symfony/dom-crawler": "~2.3",
-                "symfony/form": "~2.3"
+                "monolog/monolog": "^1.4.1",
+                "swiftmailer/swiftmailer": "~5",
+                "symfony/browser-kit": "~2.3|3.0.*",
+                "symfony/config": "~2.3|3.0.*",
+                "symfony/css-selector": "~2.3|3.0.*",
+                "symfony/debug": "~2.3|3.0.*",
+                "symfony/dom-crawler": "~2.3|3.0.*",
+                "symfony/finder": "~2.3|3.0.*",
+                "symfony/form": "~2.3|3.0.*",
+                "symfony/locale": "~2.3|3.0.*",
+                "symfony/monolog-bridge": "~2.3|3.0.*",
+                "symfony/options-resolver": "~2.3|3.0.*",
+                "symfony/phpunit-bridge": "~2.7",
+                "symfony/process": "~2.3|3.0.*",
+                "symfony/security": "~2.3|3.0.*",
+                "symfony/serializer": "~2.3|3.0.*",
+                "symfony/translation": "~2.3|3.0.*",
+                "symfony/twig-bridge": "~2.3|3.0.*",
+                "symfony/validator": "~2.3|3.0.*",
+                "twig/twig": "~1.8|~2.0"
             },
             "type": "library",
             "extra": {
@@ -548,7 +543,7 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2015-08-24 10:04:48"
+            "time": "2015-09-08 08:04:26"
         },
         {
             "name": "silex/web-profiler",
@@ -713,16 +708,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.21.1",
+            "version": "v1.21.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "ca8d3aa90b6a01c82e07909fe815d6b443e75a23"
+                "reference": "ddce1136beb8db29b9cd7dffa8ab518b978c9db3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ca8d3aa90b6a01c82e07909fe815d6b443e75a23",
-                "reference": "ca8d3aa90b6a01c82e07909fe815d6b443e75a23",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/ddce1136beb8db29b9cd7dffa8ab518b978c9db3",
+                "reference": "ddce1136beb8db29b9cd7dffa8ab518b978c9db3",
                 "shasum": ""
             },
             "require": {
@@ -770,7 +765,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-08-26 08:58:31"
+            "time": "2015-09-09 05:28:51"
         }
     ],
     "packages-dev": [
@@ -830,16 +825,16 @@
         },
         {
             "name": "heroku/heroku-buildpack-php",
-            "version": "v75",
+            "version": "v76",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heroku/heroku-buildpack-php.git",
-                "reference": "1f671f8deef2e591f0641a345144558fa8ff6d58"
+                "reference": "5a770b914549cf2a897cbbaf379eb5adf410d464"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/1f671f8deef2e591f0641a345144558fa8ff6d58",
-                "reference": "1f671f8deef2e591f0641a345144558fa8ff6d58",
+                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/5a770b914549cf2a897cbbaf379eb5adf410d464",
+                "reference": "5a770b914549cf2a897cbbaf379eb5adf410d464",
                 "shasum": ""
             },
             "bin": [
@@ -870,7 +865,7 @@
                 "nginx",
                 "php"
             ],
-            "time": "2015-08-21 17:18:32"
+            "time": "2015-09-08 13:40:29"
         },
         {
             "name": "kurl/silex-security-profiler-provider",
