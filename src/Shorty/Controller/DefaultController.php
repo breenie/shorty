@@ -57,6 +57,6 @@ class DefaultController
         // TODO remove this hack by exposing some of the parts of the ShortyUrl
         $shortened = json_decode($response->getContent(), true);
 
-        return $this->app->redirect($shortened['url']);
+        return $this->app->redirect($shortened['long_url']);
     }
 }

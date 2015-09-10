@@ -68,11 +68,15 @@ module.exports = function (grunt) {
           'bower_components/angular-resource/angular-resource.js',
           'bower_components/angular-flash/dist/angular-flash.js',
           'bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js',
+          'bower_components/tagged-infinite-scroll/taggedInfiniteScroll.min.js',
           '<%= shorty.app %>/scripts/{,*/}*.js'
         ],
         dest: '<%= shorty.dist %>/js/<%= pkg.name %>.js'
       },
       css: {
+        options: {
+          separator: '\n'
+        },
         src: [
           'bower_components/bootstrap/dist/css/bootstrap.min.css',
           '<%= shorty.app %>/styles/shorty.css'
@@ -94,7 +98,8 @@ module.exports = function (grunt) {
             'bower_components/angular-route/angular-route.js',
             'bower_components/angular-mocks/angular-mocks.js',
             'bower_components/angular-resource/angular-resource.js',
-            'bower_components/angular-flash/dist/angular-flash.js'
+            'bower_components/angular-flash/dist/angular-flash.js',
+            'bower_components/tagged-infinite-scroll/taggedInfiniteScroll.min.js'
           ]
         }
       }
@@ -158,14 +163,14 @@ module.exports = function (grunt) {
           livereload: '<%= watch.options.livereload %>'
         },
         files: [
+          'Gruntfile.js',
           '<%= shorty.app %>/{,*/}*.html',
-          '.tmp/styles/{,*/}*.css',
+          '<%= shorty.app %>/styles/{,*/}*.css',
           '<%= shorty.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ],
         tasks: [
-          'newer:copy:styles',
-          'newer:copy:dist',
-          'processhtml:dev'
+          'newer:concat:css',
+          'newer:copy:dist'
         ]
       }
     },

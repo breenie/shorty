@@ -2,7 +2,6 @@
     "name": "kurl/shorty",
     "description": "Another URL shortener",
     "license": "MIT",
-    "version": "0.1.2",
     "type": "project",
     "require": {
         "php": ">=5.4.4",
@@ -26,7 +25,6 @@
         "symfony/validator": "~2.3",
         "doctrine/dbal": "2.2.*",
         "doctrine/migrations": "1.0.*@dev",
-        "gigablah/silex-oauth": "~0.1",
         "kurl/base62": "~1.0",
         "kurl/silex-doctrine-migrations-provider": "~0.1",
         "kurl/silex-error-template-provider": "~0.1"
@@ -37,7 +35,7 @@
         "kurl/silex-security-profiler-provider": "0.0.1"
     },
     "autoload": {
-        "psr-0": {"": "src/"}
+        "psr-4": {"Shorty\\": "src/Shorty"}
     },
     "autoload-dev": {
         "psr-0": {"": "tests/"}

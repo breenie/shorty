@@ -8,6 +8,7 @@
 
 namespace Shorty\Controller;
 
+use Shorty\Serializable\ShortyUrlSerializable;
 use Shorty\Service\UrlShortener;
 use Silex\Application;
 use Symfony\Component\Form\Form;
@@ -47,6 +48,15 @@ class ApiController
             0 === strcasecmp('asc', $request->get('direction')) ? SORT_ASC : SORT_DESC
         );
 
+        $generator = $this->app['url_generator'];
+
+        $results['results'] = array_map(
+            function ($url) use ($generator) {
+                return new ShortyUrlSerializable($url, $generator);
+            },
+            $results['results']
+        );
+
         return new JsonResponse($results);
     }
 
@@ -61,7 +71,12 @@ class ApiController
      */
     public function getLinkAction($id)
     {
-        return new JsonResponse($this->getService()->find($this->app['kurl.base62']->decode($id)));
+        return new JsonResponse(
+            new ShortyUrlSerializable(
+                $this->getService()->find($this->app['kurl.base62']->decode($id)),
+                $this->app['url_generator']
+            )
+        );
     }
 
     /**
@@ -75,9 +90,12 @@ class ApiController
     public function patchLinkClicksAction(Request $request, $id)
     {
         return new JsonResponse(
-            $this->getService()->registerClick(
-                $this->app['kurl.base62']->decode($id),
-                $request->headers->get('User-Agent')
+            new ShortyUrlSerializable(
+                $this->getService()->registerClick(
+                    $this->app['kurl.base62']->decode($id),
+                    $request->headers->get('User-Agent')
+                ),
+                $this->app['url_generator']
             )
         );
     }
@@ -106,7 +124,7 @@ class ApiController
             $readable = $created->jsonSerialize();
 
             $response->setStatusCode(Response::HTTP_CREATED);
-            $response->setData($created);
+            $response->setData(new ShortyUrlSerializable($created, $this->app['url_generator']));
             $response->headers->set(
                 'Location',
                 $this->app['url_generator']->generate('kurl_shorty_redirect', ['id' => $readable['id']]),

@@ -1,18 +1,18 @@
-<div class="container">
-    <section>
+<section>
+    <div class="container">
         <div class="page-header">
-            <h1>Details for short link <a ng-href="/{{ details.id }}">{{ details.id }}</a></h1>
+            <h1>Details for short link <a ng-href="{{ details.short_url }}">{{ details.hash }}</a></h1>
         </div>
 
-        <table class="table table-striped">
+        <table class="url-details table table-striped">
             <tbody>
             <tr>
                 <th>Short</th>
-                <td><a ng-href="http://{{ hostname }}/{{ details.id }}">{{ hostname}}/{{ details.id }}</a></td>
+                <td><a ng-href="{{ details.short_url }}">{{ details.short_url | stripScheme }}</a></td>
             </tr>
             <tr>
                 <th>Long</th>
-                <td><a ng-href="http://{{ hostname }}/{{ details.id }}">{{ details.url }}</a></td>
+                <td><a ng-href="{{ details.long_url }}">{{ details.long_url }}</a></td>
             </tr>
             <tr>
                 <th>Created</th>
@@ -24,5 +24,6 @@
             </tr>
             </tbody>
         </table>
-    </section>
-</div>
+    </div>
+</section>
+

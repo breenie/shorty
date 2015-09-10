@@ -7,18 +7,17 @@
  */
 namespace Shorty\Tests\Model;
 
-use Kurl\Maths\Encode\Base62;
 use Shorty\Model\ShortyUrl;
 
 class ShortyUrlTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * A short URL fixture.
      *
      * @var ShortyUrl
      */
     private $fixture;
+
     /**
      * Ensure the links json serialise correctly.
      */
@@ -37,6 +36,18 @@ class ShortyUrlTest extends \PHPUnit_Framework_TestCase
     public function testMissingKeys()
     {
         new ShortyUrl(array());
+    }
+
+    /**
+     * Tests the getters.
+     */
+    public function testGetters()
+    {
+        $this->assertEquals(666, $this->fixture->getId());
+        $this->assertEquals('http://example.com', $this->fixture->getUrl());
+        $this->assertEquals(0, $this->fixture->getClicks());
+        $this->assertInstanceOf('DateTime', $this->fixture->getCreated());
+        $this->assertEquals('2015-01-01T00:00:01+00:00', $this->fixture->getCreated()->format('c'));
     }
 
     /**
