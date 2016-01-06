@@ -15,7 +15,7 @@ processes:
     # Should be any of standard, large or xlarge.
     memory: 'standard'
     # Set the command which should be executed
-    command: 'bundle exec rackup -p $PORT'
+    # command: 'bundle exec rackup -p $PORT'
     # Set the number of times this process should run
     quantity: 1
     # Set whether or not this process should receive traffic from the proxies
