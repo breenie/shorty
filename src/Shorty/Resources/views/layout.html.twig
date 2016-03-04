@@ -11,24 +11,10 @@
     <link rel="shortcut icon" href="{{ app.request.basePath }}/favicon.ico" />
     <link rel="stylesheet" href="/css/shorty.css">
     <script src="/js/shorty.js"></script>
-
-    {% block head %}{% endblock %}
-
 </head>
-<body{% block body_attributes %}{% endblock %}>
-
-{% block nav_content %}{% include 'menu.html.twig' %}{% endblock %}
-
-<div ng-view></div>
+<body>
 
 {% block body_content %}{% endblock %}
-
-<footer class="footer">
-    <div class="container">
-        <p class="text-muted">Another vanity project by <a href="http://www.kurl.co.uk/">kurl
-                ltd</a> {{ "now"|date("Y") }}</p>
-    </div>
-</footer>
 
 </body>
 </html>
