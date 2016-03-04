@@ -27,12 +27,12 @@ deployment:
     testing:
         branch: "feature/viaduct"
         commands:
-            - >
-                curl -X POST -s \
-                    -H "X-Auth-Token: ${VDT_API_TOKEN}" \
-                    -H "X-Auth-Secret: ${VDT_API_SECRET}" \
-                    https://api.viaduct.io/api/v1/repositories/commits \
-                    --data-urlencode 'params={"application":"shorty-stage","update":1}'
+            # - >
+            #     curl -X POST -s \
+            #         -H "X-Auth-Token: ${VDT_API_TOKEN}" \
+            #         -H "X-Auth-Secret: ${VDT_API_SECRET}" \
+            #         https://api.viaduct.io/api/v1/repositories/commits \
+            #         --data-urlencode 'params={"application":"shorty-stage","update":1}'
             - >
                 curl -X POST -s \
                     -H "X-Auth-Token: ${VDT_API_TOKEN}" \
