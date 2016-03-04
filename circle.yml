@@ -38,7 +38,7 @@ deployment:
                     -H "X-Auth-Token: ${VDT_API_TOKEN}" \
                     -H "X-Auth-Secret: ${VDT_API_SECRET}" \
                     https://api.viaduct.io/api/v1/deployments/start \
-                    --data-urlencode 'params={"application":"shorty-stage","version":"${CIRCLE_SHA1}"}'
+                    --data-urlencode "params={\"application\":\"shorty-stage\",\"version\":\"${CIRCLE_SHA1}\"}"
 
     staging:
         branch: develop
