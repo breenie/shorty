@@ -22,25 +22,19 @@ deployment:
     production:
         branch: master
         commands:
-            - git push dokku@apps.kurl.io:shorty $CIRCLE_SHA1:refs/heads/master
+            - >
+                curl -X POST -s \
+                    -H "X-Auth-Token: ${VDT_API_TOKEN}" \
+                    -H "X-Auth-Secret: ${VDT_API_SECRET}" \
+                    https://api.viaduct.io/api/v1/deployments/start \
+                    --data-urlencode "params={\"application\":\"shorty\",\"version\":\"${CIRCLE_SHA1}\"}"
 
-    testing:
-        branch: "feature/viaduct"
+    staging:
+        branch: develop
         commands:
-            # - >
-            #     curl -X POST -s \
-            #         -H "X-Auth-Token: ${VDT_API_TOKEN}" \
-            #         -H "X-Auth-Secret: ${VDT_API_SECRET}" \
-            #         https://api.viaduct.io/api/v1/repositories/commits \
-            #         --data-urlencode 'params={"application":"shorty-stage","update":1}'
             - >
                 curl -X POST -s \
                     -H "X-Auth-Token: ${VDT_API_TOKEN}" \
                     -H "X-Auth-Secret: ${VDT_API_SECRET}" \
                     https://api.viaduct.io/api/v1/deployments/start \
                     --data-urlencode "params={\"application\":\"shorty-stage\",\"version\":\"${CIRCLE_SHA1}\"}"
-
-    staging:
-        branch: develop
-        commands:
-            - git push dokku@apps.kurl.io:shorty-stage $CIRCLE_SHA1:refs/heads/master
