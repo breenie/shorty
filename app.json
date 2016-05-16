@@ -1,0 +1,30 @@
+{
+    "name": "shorty",
+    "description": "A URL shortener",
+    "keywords": [
+        "URL",
+        "shortener"
+    ],
+    "website": "https://github.com/breenie/shorty",
+    "repository": "git@github.com:breenie/shorty.git",
+    "success_url": "/",
+    "env": {
+    },
+    "formation": {
+        "web": {
+            "quantity": 1,
+            "size": "Free"
+        }
+    },
+    "addons": [
+        "cleardb_database:ignite"
+    ],
+    "buildpacks": [
+        {
+            "url": "heroku/nodejs"
+        },
+        {
+            "url": "heroku/php"
+        }
+    ]
+}
