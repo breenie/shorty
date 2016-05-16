@@ -21,15 +21,17 @@ if (true === $app['debug']) {
     // @codeCoverageIgnoreEnd
 }
 
+$dsn = parse_url(getenv(getenv('DSN_SOURCE_ENV_NAME') ?: 'CLEARDB_DATABASE_URL'));
+
 $app['monolog.logfile'] = __DIR__ . '/../var/logs/silex_' . $app['env'] . '.log';
 $app['asset_path']      = '/components';
 $app['db.options']      = array(
-    'driver'   => getenv('DB_DRIVER') ?: 'pdo_mysql', // currently only mysql is supported
-    'dbname'   => getenv('DB_NAME'),
-    'host'     => getenv('DB_HOST'),
-    'port'     => getenv('DB_PORT'),
-    'user'     => getenv('DB_USER'),
-    'password' => getenv('DB_PASS'),
+    'driver'   => 'pdo_' . (isset($dsn['scheme']) ? $dsn['scheme'] : 'mysql'), // currently only mysql is supported
+    'dbname'   => isset($dsn['path']) ? substr($dsn['path'], 1) : null,
+    'host'     => isset($dsn['host']) ? $dsn['host'] : null,
+    'port'     => isset($dsn['port']) ? $dsn['port'] : null,
+    'user'     => isset($dsn['user']) ? $dsn['user'] : null,
+    'password' => isset($dsn['pass']) ? $dsn['pass'] : null,
 );
 
 $app['oauth.services.google.key'] = getenv('OAUTH_SERVICES_GOOGLE_KEY');
