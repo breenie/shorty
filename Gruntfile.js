@@ -5,7 +5,7 @@ module.exports = function (grunt) {
 
   // Configurable paths for the application
   var appConfig = {
-    app: require('./bower.json').appPath || 'app',
+    app: 'app',
     dist: 'web'
   };
 
@@ -32,7 +32,6 @@ module.exports = function (grunt) {
           dest: '<%= shorty.dist %>',
           src: [
             '*.{ico,png,txt}',
-            '.htaccess',
             '{,*/}*.html' //,
             //'images/{,*/}*.{webp}',
             //'styles/fonts/{,*/}*.*'
@@ -62,13 +61,13 @@ module.exports = function (grunt) {
       },
       js: {
         src: [
-          'bower_components/bootstrap-without-jquery/bootstrap3/bootstrap-without-jquery.min.js',
-          'bower_components/angular/angular.js',
-          'bower_components/angular-route/angular-route.js',
-          'bower_components/angular-resource/angular-resource.js',
-          'bower_components/angular-flash/dist/angular-flash.js',
-          'bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js',
-          'bower_components/tagged-infinite-scroll/taggedInfiniteScroll.min.js',
+          'node_modules/bootstrap-without-jquery/bootstrap3/bootstrap-without-jquery.min.js',
+          'node_modules/angular/angular.js',
+          'node_modules/angular-route/angular-route.js',
+          'node_modules/angular-resource/angular-resource.js',
+          'node_modules/angular-flash/dist/angular-flash.js',
+          'node_modules/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js',
+          'node_modules/tagged-infinite-scroll/taggedInfiniteScroll.js',
           '<%= shorty.app %>/scripts/{,*/}*.js'
         ],
         dest: '<%= shorty.dist %>/js/<%= pkg.name %>.js'
@@ -78,7 +77,7 @@ module.exports = function (grunt) {
           separator: '\n'
         },
         src: [
-          'bower_components/bootstrap/dist/css/bootstrap.min.css',
+          'node_modules/bootstrap/dist/css/bootstrap.min.css',
           '<%= shorty.app %>/styles/shorty.css'
         ],
         dest: '<%= shorty.dist %>/css/<%= pkg.name %>.css'
@@ -136,10 +135,6 @@ module.exports = function (grunt) {
       options: {
         livereload: 35729
       },
-      bower: {
-        files: ['bower.json'] //,
-        //tasks: ['wiredep']
-      },
       js: {
         files: ['<%= shorty.app %>/scripts/{,*/}*.js'],
         tasks: ['newer:jshint:dist', 'concat'],
@@ -195,7 +190,7 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           dot: true,
-          src: ['<%= shorty.dist %>/*', '!<%= shorty.dist %>/index.php']
+          src: ['<%= shorty.dist %>/*']
         }]
       },
       build: [
@@ -273,7 +268,7 @@ module.exports = function (grunt) {
   grunt.registerTask('serve', 'Compile then start a connect web server', function () {
     grunt.task.run([
       'clean:dist',
-      'newer:jshint:dist',
+      // 'newer:jshint:dist',
       'newer:copy:styles',
       'newer:copy:dist',
       'concat',

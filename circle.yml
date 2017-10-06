@@ -2,20 +2,15 @@
 
 machine:
     timezone: Europe/London
-    php:
-        version: 5.4.4 # Seems to be the lowest version in circleci.
     node:
         version: 0.12.0
 dependencies:
     override:
-        # Stop the circleci composer install getting confused by download type "vcs"
-        - composer install --prefer-dist --no-interaction
         - npm install
 
 test:
     override:
         - mkdir -p $CIRCLE_TEST_REPORTS/junit
-        - php bin/phpunit --coverage-text --log-junit $CIRCLE_TEST_REPORTS/junit/junit.xml
         - grunt test
 
 deployment:

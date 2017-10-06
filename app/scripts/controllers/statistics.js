@@ -24,7 +24,7 @@
 
             $scope.fetching = true;
 
-            $http.get('/api/urls.json', {params: {limit: $scope.limit, offset: offset}}).then(function (response) {
+            $http.get('/api/urls', {params: {limit: $scope.limit, offset: offset}}).then(function (response) {
                 $scope.fetching = false;
                 $scope.items = $scope.items.concat(response.data.results);
                 $scope.total = response.data.total;
