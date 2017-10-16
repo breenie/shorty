@@ -17,19 +17,19 @@
     //$locationProvider.html5Mode({enabled: true});
     $routeProvider
       .when('/statistics', {
-        templateUrl: 'views/statistics.html',
+        template: require('../views/statistics.html'),
         controller: 'StatisticsController'
       })
       .when('/:id/details', {
-        templateUrl: 'views/details.html',
+        template: require('../views/details.html'),
         controller: 'DetailsController'
       })
       .when('/', {
-        templateUrl: 'views/index.html',
+        template: require('../views/index.html'),
         controller: 'IndexController'
       })
       .otherwise({
-        templateUrl: 'views/index.html',
+        template: require('../views/index.html'),
         controller: 'IndexController'
       });
   }
