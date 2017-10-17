@@ -43,6 +43,7 @@
     "uglifyjs-webpack-plugin": "^1.0.0-beta.3"
   },
   "scripts": {
-    "build": "./node_modules/.bin/webpack --config=webpack.config.js --colors"
+    "build": "./node_modules/.bin/webpack --config=webpack.config.js --colors",
+    "postinstall": "npm run build"
   }
 }
