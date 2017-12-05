@@ -7,7 +7,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Shorty</h1>
         <div id="results">
           <div className="result">
             <UrlHarvester></UrlHarvester>
