@@ -28,9 +28,13 @@ module.exports = function (service) {
   router.get('/:id', (request, response) => {
     const id = base62.decode(request.params.id);
 
-    service.getUrl(id).then((url) => {
-      response.json(serialize(url, request.protocol + '://' + request.get('host')));
-    });
+    service.getUrl(id)
+      .then((url) => {
+        response.json(serialize(url, request.protocol + '://' + request.get('host')));
+      })
+      .catch(e => {
+        response.status(404).json({error: e.message || 'Unknown error'})
+      });
   });
 
   router.post('/', (request, response) => {
