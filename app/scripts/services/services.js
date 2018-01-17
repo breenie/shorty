@@ -16,7 +16,7 @@
   'use strict';
 
   function service($resource) {
-    return $resource('/api/urls/:id.json', {}, {
+    return $resource('/api/urls/:id', {}, {
       query: {
         method: 'GET',
         isArray: false/*,

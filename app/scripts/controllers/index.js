@@ -13,7 +13,7 @@
 
             $http({
                 method: 'POST',
-                url: '/api/urls.json',
+                url: '/api/urls',
                 data: {form: $scope.formData},
                 headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
             }).success(function (data, status) {
