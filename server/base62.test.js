@@ -1,5 +1,5 @@
 const assert = require('assert');
-const base62 = require('../src/base62');
+const base62 = require('../server/base62');
 
 describe('Base62', function () {
     const known = {
