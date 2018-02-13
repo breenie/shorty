@@ -1,0 +1,8 @@
+language: node_js
+deploy:
+  provider: heroku
+  api_key:
+    secure: E18lozlMFNuy43EXMNU/f1LmaMV/QOCTmjFcLQzKnu5wi4zudHpVz2sN0OIR4F7Vw0bNF1U3cOTk64oGaysgiJBaATFuW1fd406LFG7QZcmxlVxIpb2EhcPpYgyW4ZOhvS9ydTR8IDW/4JG7Gj/Vc33hyVAXD9Cm8PIRB1NAFN8=
+  app:
+    master: shorty-prod
+    develop: shorty-stage
