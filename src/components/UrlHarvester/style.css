@@ -11,7 +11,7 @@ button.button-go {
     background-color: rgb(255, 102, 204);
 }
 
-button[type=submit] {
+form.url-harvester button[type=submit] {
     padding-left: 15px;
     padding-right: 15px;
     margin-left: 5px;

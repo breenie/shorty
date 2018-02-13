@@ -1,4 +1,5 @@
 import React from 'react';
+import Success from '../Success';
 import './style.css';
 
 class UrlHarvester extends React.Component {
@@ -6,11 +7,13 @@ class UrlHarvester extends React.Component {
     super(props);
 
     this.state = {
-      url: ''
+      url: '',
+      created: null
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
 
   handleChange(event) {
@@ -19,6 +22,14 @@ class UrlHarvester extends React.Component {
 
   handleSubmit(event) {
     this.create();
+    event.preventDefault();
+  }
+
+  handleReset(event) {
+    this.setState({
+      url: '',
+      created: null
+    });
     event.preventDefault();
   }
 
@@ -31,22 +42,37 @@ class UrlHarvester extends React.Component {
 
     fetch('/api/urls', params)
       .then(res => {
-        console.log(res);
-        this.setState({url: ''});
-      });
+        return res.json();
+      })
+      .then(json => {
+        this.setState({created: json['short_url'], url: ''});
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      ;
   }
 
   render() {
+
+    if (this.state.created) {
+      return (
+        <Success onClick={this.handleReset} shortUrl={this.state.created} />
+      );
+    }
+
     return (
-      <form className="pure-form" method="POST" onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          className="pure-input url"
-          placeholder="Enter really long URL"
-          value={this.state.url}
-          onChange={this.handleChange}/>
-        <button type="submit" className="pure-button pure-button-primary button-go">Go</button>
-      </form>
+      <div>
+        <form className="url-harvester pure-form" method="POST" onSubmit={this.handleSubmit}>
+          <input
+            type="url"
+            className="pure-input url"
+            placeholder="Enter a really long URL"
+            value={this.state.url}
+            onChange={this.handleChange}/>
+          <button type="submit" className="pure-button pure-button-primary button-go">Go</button>
+        </form>
+      </div>
     );
   }
 };

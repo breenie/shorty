@@ -31,6 +31,9 @@ class UrlList extends React.Component {
           limit:  limit,
           offset: offset
         })
+      })
+      .catch(err => {
+        console.log(err);
       });
   };
 
