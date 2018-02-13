@@ -1,6 +1,6 @@
 const express = require('express');
 const router  = express.Router();
-const base62  = require('base62');
+const base62  = require('../base62');
 
 const serialize = (url, host) => {
   const hash = base62.encode(url.id);

@@ -11,7 +11,7 @@
     "env": {
         "DSN_SOURCE_ENV_NAME": {
             "description": "The name of the environment variable which contains the database DSN.",
-            "value": "CLEARDB_DATABASE_URL"
+            "value": "JAWSDB_MARIA_URL"
         }
     },
     "formation": {

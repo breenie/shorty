@@ -1,0 +1,25 @@
+a {
+    color: #036;
+}
+
+p {
+    line-height: 22px;
+}
+
+#results {
+    width: 100%;
+    padding-top: 10px;
+}
+
+#results .result {
+    background-color: rgb(249, 187, 223);
+    padding: 10px;
+}
+
+#results form {
+    margin-top: 8px;
+}
+
+div.url-list {
+
+}
