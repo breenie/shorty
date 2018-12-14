@@ -10,7 +10,7 @@
     { "src": "www/package.json", "use": "@now/static-build" },
     { "src": "api/index.js", "use": "@now/node-server" }
   ],
-  "regions": ["bru1"],
+  "regions": ["bru"],
   "routes": [
     { "src": "^/[A-Za-z0-9]+", "dest": "/api/index.js" },
     { "src": "^/api/urls(.*)", "dest": "/api/index.js" },
