@@ -13,7 +13,7 @@ module.exports = function (service) {
       .catch(e => {
         response
           .status(404)
-          .send(e.message || 'Unknown error')
+          .send(e.message + ' ' + request.params.id || 'Unknown error')
       });
   });
 

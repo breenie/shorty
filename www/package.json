@@ -8,26 +8,18 @@
     "mocha": "^4.0.1"
   },
   "dependencies": {
-    "base62": "^1.2.0",
-    "bluebird": "^3.5.1",
-    "body-parser": "^1.18.2",
-    "dsn-parser": "^1.0.1",
-    "express": "^4.16.1",
-    "promise-mysql": "^3.1.0",
     "purecss": "^1.0.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-intl": "^2.4.0",
-    "react-scripts": "^1.0.14",
-    "sqlstring": "^2.3.0"
+    "react-scripts": "^1.0.14"
   },
   "scripts": {
-    "postinstall": "npm run build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "server": "nodemon --exec \"heroku local web -p 3001\" --signal SIGTERM"
+    "now-build": "npm run build && mv build dist"
   },
   "proxy": "http://localhost:3001/"
 }

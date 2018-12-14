@@ -33,7 +33,7 @@ module.exports = function (service) {
         response.json(serialize(url, request.protocol + '://' + request.get('host')));
       })
       .catch(e => {
-        response.status(404).json({error: e.message || 'Unknown error'})
+        response.status(404).json({error: (e.message + ' ' + request.params.id) || 'Unknown error'})
       });
   });
 
