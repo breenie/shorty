@@ -1,6 +1,7 @@
 {
   "version": 2,
   "name": "shorty",
+  "alias": ["kurl.uk"],
   "env": {
     "DSN_SOURCE_ENV_NAME": "@dsn_source_env_name",
     "CLEARDB_DATABASE_URL": "@cleardb_database_url"
