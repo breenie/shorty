@@ -1,0 +1,25 @@
+{
+  "version": "0.0.0",
+  "name": "shorty",
+  "description": "A URL shortener",
+  "repository": "https://github.com/breenie/shorty",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "purecss": "^1.0.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-intl": "^2.4.0",
+    "react-scripts": "^1.0.14"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "now-build": "npm run build && mv build dist"
+  },
+  "proxy": "http://localhost:3001/"
+}

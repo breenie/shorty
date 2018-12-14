@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "name": "shorty",
+  "alias": ["kurl.uk"],
+  "env": {
+    "DSN_SOURCE_ENV_NAME": "@dsn_source_env_name",
+    "CLEARDB_DATABASE_URL": "@cleardb_database_url"
+  },
+  "builds": [
+    { "src": "www/package.json", "use": "@now/static-build" },
+    { "src": "api/index.js", "use": "@now/node-server" }
+  ],
+  "regions": ["bru"],
+  "routes": [
+    { "src": "^/[A-Za-z0-9]+", "dest": "/api/index.js" },
+    { "src": "^/api/urls(.*)", "dest": "/api/index.js" },
+    { "src": "^/static/(.*)", "dest": "/www/static/$1" },
+    { "src": "^/favicon.ico", "dest": "/www/favicon.ico" },
+    { "src": "^/asset-manifest.json", "dest": "/www/asset-manifest.json" },
+    { "src": "^/manifest.json", "dest": "/www/manifest.json" },
+    {
+      "src": "^/service-worker.js",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/www/service-worker.js"
+    },
+    { "src": "^/precache-manifest.(.*)", "dest": "/www/precache-manifest.$1" },
+    { "src": "^/", "dest": "/www/index.html" }
+  ]
+}
