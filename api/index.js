@@ -13,10 +13,7 @@ const service    = new UrlService(connection);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-// app.use(express.static(__dirname + '/../build'));
-// app.use('/', require('./routes/html'));
 app.use('/', require('./src/routes/redirects')(service));
-// app.use('/api/urls', require('./routes/urls')(service));
 app.use('/api/urls', require('./src/routes/urls')(service));
 
 app.listen();
