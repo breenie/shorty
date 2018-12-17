@@ -7,6 +7,8 @@ const options = {
   port: process.env.PORT || 5000
 };
 
+console.log(options);
+
 const connection = require('./src/connection')(options.dsn);
 const UrlService = require('./src/services/urls');
 const service    = new UrlService(connection);
@@ -16,4 +18,4 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', require('./src/routes/redirects')(service));
 app.use('/api/urls', require('./src/routes/urls')(service));
 
-app.listen();
+app.listen(process.env.PORT);

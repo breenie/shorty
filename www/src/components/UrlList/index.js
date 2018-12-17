@@ -10,60 +10,74 @@ function removeScheme(url) {
 class UrlList extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       urls:   [],
-      total:  0,
+      next: null,
       limit:  20,
-      offset: 0
+      history: []
     };
   }
 
-  getUrls(offset, limit) {
-    offset = offset || 0;
-    limit  = limit || 10;
-    fetch(`/api/urls?offset=${offset}'&limit=${limit}`)
-      .then(res => res.json())
+  getUrls(limit, last) {
+    limit = limit || 20
+    last  = last || '';
+
+    return new Promise((resolve, reject) => {
+      fetch(`/api/urls?limit=${limit}&last=${last}`)
+      .then((res) => { return res.json() })
       .then((response) => {
-        this.setState({
-          urls:   response.results,
-          total:  response.total,
-          limit:  limit,
-          offset: offset
+        resolve({
+          next: response.last || null,
+          urls: response.results,
+          limit: limit
         })
       })
-      .catch(err => {
-        console.log(err);
-      });
+      .catch((error) => {
+        console.log(error);
+      });      
+    });
   };
 
   next() {
-    this.getUrls(this.state.offset + this.state.limit, this.state.limit);
+    const last = this.state.next;
+    this
+      .getUrls(this.state.limit, last)
+      .then((result) => {
+        this.state.history.push(last);
+        this.setState({
+          next: result.next,
+          urls: result.urls,
+          limit: result.limit
+        })
+      });
   }
 
   prev() {
-    this.getUrls(this.state.offset - this.state.limit, this.state.limit);
+    const history = this.state.history;
+    history.pop(); 
+    const prev = history.slice(-1);
+    this
+      .getUrls(this.state.limit, prev)
+      .then((result) => {
+        this.setState({
+          history: history,
+          next: result.next,
+          urls: result.urls,
+          limit: result.limit
+        })        
+      });
   }
 
   start() {
-    return 0 === this.state.offset;
+    return 1 === this.state.history.length;
   }
 
   end() {
-    return this.state.offset + this.state.limit >= this.state.total;
-  }
-
-  to() {
-    return this.end() ? this.state.total : this.state.offset + this.state.limit;
-  }
-
-  last() {
-    const remain = this.state.total % this.state.limit;
-    return this.state.total - (0 === remain ? this.state.limit : remain);
+    return null === this.state.next;
   }
 
   componentDidMount() {
-    this.getUrls(0, 15);
+    this.next();
   }
 
   render() {
@@ -84,13 +98,9 @@ class UrlList extends React.Component {
             <td colSpan="4">
               <div className="pagination">
                 <p className="details">
-                  Displaying <FormattedNumber value={this.state.offset + 1} /> to <FormattedNumber value={this.to()}/> of <FormattedNumber value={this.state.total}/> urls
+                  Page <FormattedNumber value={this.state.history.length}/>
                 </p>
 
-                <button
-                  onClick={() => this.getUrls(0, this.state.limit)}
-                  className="pure-button pure-button-primary button-go"
-                  disabled={this.start()}>&laquo;</button>
                 <button
                   onClick={() => this.prev()}
                   className="pure-button pure-button-primary button-go"
@@ -99,10 +109,6 @@ class UrlList extends React.Component {
                   onClick={() => this.next()}
                   className="pure-button pure-button-primary button-go"
                   disabled={this.end()}>&rsaquo;</button>
-                <button
-                  onClick={() => this.getUrls(this.last(), this.state.limit)}
-                  className="pure-button pure-button-primary button-go"
-                  disabled={this.end()}>&raquo;</button>
               </div>
             </td>
           </tr>

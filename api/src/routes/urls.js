@@ -3,7 +3,7 @@ const router  = express.Router();
 const base62  = require('../base62');
 
 const serialize = (url, host) => {
-  const hash = base62.encode(url.id);
+  const hash = url.id;
   return {
     hash:      hash,
     short_url: host + '/' + hash,
@@ -26,9 +26,7 @@ module.exports = function (service) {
   });
 
   router.get('/:id', (request, response) => {
-    const id = base62.decode(request.params.id);
-
-    service.getUrl(id)
+    service.getUrl(request.params.id)
       .then((url) => {
         response.json(serialize(url, request.protocol + '://' + request.get('host')));
       })

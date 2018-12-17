@@ -1,4 +1,15 @@
-'use strict';
+const AWS = require('aws-sdk');
+AWS.config.update({region: 'eu-west-1'});
+const IS_OFFLINE = false;
+
+const dynamodb = new AWS.DynamoDB.DocumentClient(
+  'true' === IS_OFFLINE ? {
+    region: 'localhost',
+    endpoint: 'http://localhost:8000'
+  } : null
+);
+
+const URLS_TABLE = 'shorty-urls';
 
 const SqlString = require('sqlstring');
 
@@ -7,26 +18,30 @@ const UrlService = function (connection) {
 };
 
 UrlService.prototype.getUrl = function (id) {
-  return this.connection.then((c) => {
-    const query = SqlString.format(
-      'select u.id, u.url, u.created, count(v.shorty_url_id) as clicks ' +
-      'from shorty_url u ' +
-      'left join shorty_url_visit v on v.shorty_url_id = u.id ' +
-      'where u.id = ? ' +
-      'group by u.id',
-      [id]
-    );
+  return new Promise((resolve, reject) => {
+    const params = {
+      TableName: URLS_TABLE,
+      IndexName: 'IdIndex',
+      KeyConditionExpression: "id = :id",
+      Select: 'ALL_ATTRIBUTES',
+      ExpressionAttributeValues: {
+        ":id": String(id)
+      }
+    };
 
-    return c.query(query)
-      .then((rows) => {
-        return new Promise((resolve, reject) => {
-          if (1 === rows.length) {
-            resolve(rows[0]);
-          } else {
-            reject(new Error('Couldn\'t find url id ' + id));
-          }
-        });
-      });
+    // TODO convert this to GetItem and update IAM policy
+    dynamodb.query(params, function (err, data) {
+      if (err) {
+        reject(err); // an error occurred
+      }
+
+      // TODO check why this returns null, I'd expect "Items" to exist.
+      if (data && data.Items && data.Count && 1 === data.Count) {
+        resolve(data.Items[0]);
+      } else {
+        reject(new Error('Couldn\'t find url id ' + id));
+      }
+    });
   });
 };
 
@@ -44,32 +59,32 @@ UrlService.prototype.create = function (url) {
 };
 
 UrlService.prototype.filter = function (filter) {
-  return this.connection.then((connection) => {
-    const query = SqlString.format(
-      'select SQL_CALC_FOUND_ROWS u.id, u.url, u.created, count(v.shorty_url_id) as clicks ' +
-      'from shorty_url u ' +
-      'left join shorty_url_visit v on v.shorty_url_id = u.id ' +
-      'group by u.id ' +
-      'order by u.id ? ' +
-      'limit ? offset ?',
-      [
-        SqlString.raw(filter.direction || 'desc'),
-        Number.parseInt(filter.limit || 10),
-        Number.parseInt(filter.offset || 0)
-      ]
-    );
+  return new Promise((resolve, reject) => {
+    let params = {
+      TableName: URLS_TABLE,
+      Limit: Number.parseInt(filter.limit || 10),
+      Select: 'ALL_ATTRIBUTES'
+    };
 
-    return connection.query(query)
-      .then((rows) => {
-        return connection.query('select found_rows() as total').then((total) => {
-          return new Promise((resolve) => {
-            resolve({
-              results: rows,
-              total:   total[0]['total']
-            });
-          });
-        });
-      });
+    if (filter.last) {
+      params.ExclusiveStartKey = JSON.parse(filter.last)
+    }
+
+    dynamodb.scan(params, function (err, data) {
+      if (err) {
+        return reject(err);
+      }
+
+       let results = {
+        results: data.Items
+      };
+
+      if (data.LastEvaluatedKey) {
+        results.last = data.LastEvaluatedKey;
+      }
+
+      resolve(results);
+    });
   });
 };
 
