@@ -1,102 +1,112 @@
-const AWS = require('aws-sdk');
-AWS.config.update({region: 'eu-west-1'});
+const AWS = require("aws-sdk");
+AWS.config.update({ region: "eu-west-1" });
 const IS_OFFLINE = false;
 
+const shortId = (count = 7) => {
+  const chars =
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  return "x".repeat(count).replace(/x/g, c => {
+    return chars.charAt((Math.random() * chars.length) | 0);
+  });
+};
+
 const dynamodb = new AWS.DynamoDB.DocumentClient(
-  'true' === IS_OFFLINE ? {
-    region: 'localhost',
-    endpoint: 'http://localhost:8000'
-  } : null
+  "true" === IS_OFFLINE
+    ? {
+        region: "localhost",
+        endpoint: "http://localhost:8000"
+      }
+    : null
 );
 
-const URLS_TABLE = 'shorty-urls';
+const URLS_TABLE = "shorty-urls";
 
-const SqlString = require('sqlstring');
+const UrlService = function () {
+  
+}
 
-const UrlService = function (connection) {
-  this.connection = connection;
+UrlService.prototype.getUrl = function(id) {
+  const params = {
+    TableName: URLS_TABLE,
+    IndexName: 'id-index',
+    KeyConditionExpression: "id = :id",
+    Select: 'ALL_ATTRIBUTES',
+    ExpressionAttributeValues: {
+      ":id": String(id)
+    }
+  };
+
+  return dynamodb
+    .query(params)
+    .promise()
+    .then(data => {
+      // TODO fix this test to filter out too many results
+      if (!data.Items[0]) {
+        throw new Error("Couldn't find url id " + id);
+      }
+
+      return data.Items[0];
+    });
 };
 
-UrlService.prototype.getUrl = function (id) {
-  return new Promise((resolve, reject) => {
-    const params = {
-      TableName: URLS_TABLE,
-      IndexName: 'IdIndex',
-      KeyConditionExpression: "id = :id",
-      Select: 'ALL_ATTRIBUTES',
-      ExpressionAttributeValues: {
-        ":id": String(id)
-      }
-    };
+UrlService.prototype.create = function(url) {
+  // TODO add promiseRetry
+  const id = shortId(6);
+  const params = {
+    Item: { id, url, created: (new Date).toISOString(), clicks: 0 },
+    TableName: URLS_TABLE
+  };
 
-    // TODO convert this to GetItem and update IAM policy
-    dynamodb.query(params, function (err, data) {
-      if (err) {
-        reject(err); // an error occurred
-      }
-
-      // TODO check why this returns null, I'd expect "Items" to exist.
-      if (data && data.Items && data.Count && 1 === data.Count) {
-        resolve(data.Items[0]);
-      } else {
-        reject(new Error('Couldn\'t find url id ' + id));
-      }
-    });
-  });
-};
-
-UrlService.prototype.create = function (url) {
-  return this.connection.then((connection) => {
-    return connection.query(
-      'insert into shorty_url values (null, ?, CURRENT_TIMESTAMP)',
-      [url]
-    ).then(() => {
-      return connection.query('select last_insert_id() as last_insert_id').then((rows) => {
-        return this.getUrl(rows[0]['last_insert_id']);
-      })
-    });
-  });
+  return dynamodb
+    .put(params)
+    .promise()
+    .then(() => this.getUrl(id));
 };
 
 UrlService.prototype.filter = function (filter) {
-  return new Promise((resolve, reject) => {
-    let params = {
-      TableName: URLS_TABLE,
-      Limit: Number.parseInt(filter.limit || 10),
-      Select: 'ALL_ATTRIBUTES'
-    };
+  let params = {
+    TableName: URLS_TABLE,
+    Limit: Number.parseInt(filter.limit || 10),
+    Select: "ALL_ATTRIBUTES",
+    ProjectionExpression: 'id, created'
+  };
 
-    if (filter.last) {
-      params.ExclusiveStartKey = JSON.parse(filter.last)
-    }
+  if (filter.last) {
+    params.ExclusiveStartKey = JSON.parse(filter.last);
+  }
 
-    dynamodb.scan(params, function (err, data) {
-      if (err) {
-        return reject(err);
-      }
-
-       let results = {
+  return dynamodb
+    .scan(params)
+    .promise()
+    .then(data => { 
+      let results = {
         results: data.Items
       };
 
       if (data.LastEvaluatedKey) {
-        results.last = data.LastEvaluatedKey;
+        results.last = JSON.stringify(data.LastEvaluatedKey);
       }
 
-      resolve(results);
+      return results;
     });
-  });
 };
 
-UrlService.prototype.registerClick = function (id, userAgent) {
-  return this.connection.then((connection) => {
-    connection.query(
-      'insert into shorty_url_visit values (?, ?, CURRENT_TIMESTAMP)',
-      [id, userAgent]
-    );
-
-    return this.getUrl(id);
-  });
+UrlService.prototype.registerClick = function(id, userAgent) {
+  const params = {
+    Key: { id },
+    UpdateExpression: "set #c = #c + :incr",
+    ExpressionAttributeNames: { "#c": "clicks" },
+    ExpressionAttributeValues: {
+      ":incr": 1
+    },
+    TableName: URLS_TABLE
+  };
+  return dynamodb
+    .update(params)
+    .promise()
+    .then(data => {
+      return this.getUrl(id);
+    });
 };
 
 module.exports = UrlService;

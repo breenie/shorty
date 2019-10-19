@@ -1,12 +1,9 @@
 const express = require('express');
-const router  = express.Router();
-const base62  = require('../base62');
+const router = express.Router();
 
 module.exports = function (service) {
   router.get('/:id', (request, response) => {
-    const id = base62.decode(request.params.id);
-
-    service.registerClick(id, request.headers['User-Agent'] || 'Unknown')
+    service.registerClick(request.params.id, request.headers['User-Agent'] || 'Unknown')
       .then((url) => {
         response.redirect(301, url.url);
       })
