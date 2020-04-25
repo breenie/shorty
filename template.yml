@@ -1,0 +1,180 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Shorty
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: shorty
+    Description: The project name
+
+  EnvironmentName:
+    Type: String
+    Default: stage
+    Description: The environment name
+
+  DomainName:
+    Type: String
+    Default: example.org
+    Description: The shortener domain name
+
+  UseLocalClient:
+    Type: String
+    Description: Enables public client and local client for testing. (Less secure)
+    Default: "false"
+
+  GithubRepository:
+    Type: String
+    Description: The GitHub repository remote
+    Default: git@github.com:breenie/shorty.git
+
+  PersonalAccessToken:
+    Type: String
+    Description: A personal GitHub access token
+
+Conditions:
+  IsLocal: !Equals [!Ref UseLocalClient, "true"]
+
+Resources:
+  RestApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref EnvironmentName
+      EndpointConfiguration: REGIONAL
+      TracingEnabled: false
+      MethodSettings:
+        - HttpMethod: "*"
+          ResourcePath: "/*"
+          LoggingLevel: INFO
+          DataTraceEnabled: true
+          MetricsEnabled: true
+          ThrottlingRateLimit: 2000
+          ThrottlingBurstLimit: 1000
+        # - HttpMethod: "GET"
+        #   ResourcePath: "/{linkId}"
+        #   ThrottlingRateLimit: 10000
+        #   ThrottlingBurstLimit: 4000
+      DefinitionBody:
+        "Fn::Transform":
+          Name: "AWS::Include"
+          Parameters:
+            Location: "./swagger.yml"
+
+  LinkTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: owner
+          AttributeType: S
+      GlobalSecondaryIndexes:
+        - IndexName: OwnerIndex
+          KeySchema:
+            - AttributeName: owner
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+  AmplifyApp:
+    Type: AWS::Amplify::App
+    Properties:
+      Name: !Sub "${ProjectName}-${EnvironmentName}"
+      Description: Yes, we need another URL shortener
+      Repository: !Ref GithubRepository
+      AccessToken: !Ref PersonalAccessToken
+      IAMServiceRole: !GetAtt AmplifyRole.Arn
+
+  ##   Amplify Branch for hosting
+  AmplifyBranch:
+    Type: AWS::Amplify::Branch
+    Properties:
+      BranchName: master
+      AppId: !GetAtt AmplifyApp.AppId
+      Description: Master Branch
+      EnableAutoBuild: true
+
+  AmplifyRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - amplify.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: Amplify
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: "amplify:*"
+                Resource: "*"
+
+  ##   Dynamo DB Read Role
+  DDBReadRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service: "apigateway.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: DDBReadPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              Action:
+                - dynamodb:GetItem
+                - dynamodb:Scan
+                - dynamodb:Query
+              Effect: Allow
+              Resource:
+                - !GetAtt LinkTable.Arn
+                - !Sub
+                  - ${TableArn}/index/*
+                  - { TableArn: !GetAtt LinkTable.Arn }
+
+  ##   Dynamo DB Read/Write Role
+  DDBCrudRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service: "apigateway.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: DDBCrudPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              Action:
+                - dynamodb:DeleteItem
+                - dynamodb:UpdateItem
+              Effect: Allow
+              Resource: !GetAtt LinkTable.Arn
+
+Outputs:
+  ApiInvokeUrl:
+    Description: REST API URL
+    Value: !Sub https://${RestApi}.execute-api.${AWS::Region}.amazonaws.com
+
+  AmplifyAppId:
+    Description: Amplify application ID
+    Value: !GetAtt AmplifyApp.AppId

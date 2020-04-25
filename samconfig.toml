@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "shorty-stage"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-wdt186dhs82h"
+s3_prefix = "shorty-stage"
+region = "eu-west-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "ProjectName=\"shorty\" EnvironmentName=\"stage\" UseLocalClient=\"true\" PersonalAccessToken=\"36847c81266350c606a292fa79a35640100b3f62\""
+
