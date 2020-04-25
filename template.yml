@@ -25,7 +25,7 @@ Parameters:
 
   GithubRepository:
     Type: String
-    Description: The GitHub repository remote
+    Description: The GitHub repository URL
     Default: git@github.com:breenie/shorty.git
 
   PersonalAccessToken:
@@ -34,6 +34,7 @@ Parameters:
 
 Conditions:
   IsLocal: !Equals [!Ref UseLocalClient, "true"]
+  IsProd: !Equals [!Ref EnvironmentName, production]
 
 Resources:
   RestApi:
@@ -93,9 +94,12 @@ Resources:
   AmplifyBranch:
     Type: AWS::Amplify::Branch
     Properties:
-      BranchName: master
+      BranchName: !If
+        - IsProd
+        - master
+        - feature/sam # TODO Switch to develop
       AppId: !GetAtt AmplifyApp.AppId
-      Description: Master Branch
+      Description: !Sub "${EnvironmentName} branch"
       EnableAutoBuild: true
 
   AmplifyRole:
