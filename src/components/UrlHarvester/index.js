@@ -21,7 +21,7 @@ class UrlHarvester extends React.Component {
 
     this.state = {
       url: "",
-      created: null
+      created: null,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -41,7 +41,7 @@ class UrlHarvester extends React.Component {
   handleReset(event) {
     this.setState({
       url: "",
-      created: null
+      created: null,
     });
     event.preventDefault();
   }
@@ -51,12 +51,12 @@ class UrlHarvester extends React.Component {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
       },
-      body: JSON.stringify({ id: shortId(6), url: this.state.url, visits: 0 })
+      body: JSON.stringify({ id: shortId(6), url: this.state.url, visits: 0 }),
     };
 
-    fetch(`${process.env.REACT_APP_INVOKE_URL}/urls`, params)
+    fetch(`/api/urls`, params)
       .then(res => res.json())
       .then(json => {
         this.setState({ created: json.id, url: `/${json.id}` });

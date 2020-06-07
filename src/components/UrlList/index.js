@@ -24,7 +24,7 @@ class UrlList extends React.Component {
       urls: [],
       next: null,
       limit: 20,
-      history: []
+      history: [],
     };
   }
 
@@ -33,16 +33,14 @@ class UrlList extends React.Component {
     last = last || "";
 
     return new Promise((resolve, reject) => {
-      fetch(
-        `${process.env.REACT_APP_INVOKE_URL}/urls?limit=${limit}&last=${last}`
-      )
+      fetch(`/api/urls?limit=${limit}&last=${last}`)
         .then(checkStatus)
         .then(res => res.json())
         .then(response => {
           resolve({
             next: response.last || null,
             urls: response.urls,
-            limit: limit
+            limit: limit,
           });
         })
         .catch(error => {
@@ -58,7 +56,7 @@ class UrlList extends React.Component {
       this.setState({
         next: result.next,
         urls: result.urls,
-        limit: result.limit
+        limit: result.limit,
       });
     });
   }
@@ -72,7 +70,7 @@ class UrlList extends React.Component {
         history: history,
         next: result.next,
         urls: result.urls,
-        limit: result.limit
+        limit: result.limit,
       });
     });
   }

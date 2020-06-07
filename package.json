@@ -8,6 +8,7 @@
     "mocha": "^7.1.1"
   },
   "dependencies": {
+    "aws-sdk": "2.678.0",
     "node-fetch": "2.6.0",
     "purecss": "^1.0.1",
     "react": "^16.13.1",

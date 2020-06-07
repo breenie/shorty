@@ -1,14 +1,21 @@
-const fetch = require("node-fetch");
-const invokeUrl = process.env.REACT_APP_INVOKE_URL;
+import { list, create } from "../lib/urls";
 
-module.exports = async (req, res) => {
-  const { id } = req.query;
+export default async (req, res) => {
+  const { query, method, body } = req;
 
-  return fetch(`${invokeUrl}/urls/${id}`, { redirect: "manual" }).then(
-    result => {
-      res.setHeader("Location", result.headers.get("location"));
-      res.setHeader("Content-Type", "text/html");
-      res.status(302).send();
-    }
-  );
+  switch (method) {
+    case "GET":
+      list(query)
+        .then(results => res.status(200).json(results))
+        .catch(err => res.json(err));
+      break;
+    case "POST":
+      create(body)
+        .then(results => res.status(201).json(results))
+        .catch(err => res.json(err));
+      break;
+    default:
+      res.setHeader("Allow", ["GET", "POST"]);
+      res.status(405).end(`Method ${method} not allowed`);
+  }
 };

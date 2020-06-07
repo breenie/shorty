@@ -3,6 +3,7 @@ dist/
 coverage/
 node_modules/
 .env
+.env.local
 .now
-.aws-sam
-samconfig.toml
+.vercel
+shorty.json

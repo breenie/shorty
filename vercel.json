@@ -3,7 +3,8 @@
   "alias": ["kurl.uk"],
   "regions": ["bru"],
   "routes": [
-    { "src": "/(?<id>[A-Za-z0-9]+)", "dest": "/api/urls?id=$id" },
+    { "src": "/(?<id>[A-Za-z0-9]+)", "dest": "/api/redirect?id=$id" },
+    { "src": "/api/urls", "dest": "/api/urls", "methods": ["GET", "POST"] },
     { "src": "^/static/(.*)", "dest": "/static/$1" },
     { "src": "^/favicon.ico", "dest": "/favicon.ico" },
     { "src": "^/asset-manifest.json", "dest": "/asset-manifest.json" },
