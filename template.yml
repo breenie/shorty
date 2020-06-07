@@ -1,0 +1,97 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Shorty
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: shorty
+    Description: The project name
+
+  EnvironmentName:
+    Type: String
+    Default: development
+    Description: The environment name
+
+Conditions:
+  IsProd: !Equals [!Ref EnvironmentName, production]
+
+Resources:
+  LinkTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: owner
+          AttributeType: S
+      GlobalSecondaryIndexes:
+        - IndexName: OwnerIndex
+          KeySchema:
+            - AttributeName: owner
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+  DynamoUser:
+    Type: AWS::IAM::User
+    Properties:
+      Path: "/"
+
+  DynamoAccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref DynamoUser
+
+  DynamoRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service: "apigateway.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+
+  DynamoPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: !Sub "${AWS::StackName}-dynamodb-access"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          Action:
+            - dynamodb:GetItem
+            - dynamodb:Scan
+            - dynamodb:Query
+            - dynamodb:DeleteItem
+            - dynamodb:UpdateItem
+          Effect: Allow
+          Resource:
+            - !GetAtt LinkTable.Arn
+            - !Sub
+              - ${TableArn}/index/*
+              - { TableArn: !GetAtt LinkTable.Arn }
+      Roles:
+        - !Ref DynamoRole
+      Users:
+        - !Ref DynamoUser
+
+Outputs:
+  LinkTableName:
+    Description: The DyanmoDB table name
+    Value: !Ref LinkTable
+
+  AccessKey:
+    Description: The DyanmoDB user access key
+    Value: !Ref DynamoAccessKey
+
+  SecretAccessKey:
+    Description: The DyanmoDB user secret access key (probably shouldn't export this value)
+    Value: !GetAtt [DynamoAccessKey, SecretAccessKey]
