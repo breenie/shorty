@@ -1,4 +1,4 @@
-import { list, create } from "../lib/urls";
+import { list, create } from "../lib/urls.js";
 
 export default async (req, res) => {
   const { query, method, body } = req;
