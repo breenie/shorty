@@ -5,8 +5,7 @@
   "repository": "https://github.com/breenie/shorty",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^7.1.1",
-    "react-scripts": "5.0.1"
+    "mocha": "^7.1.1"
   },
   "dependencies": {
     "aws-sdk": "2.678.0",
